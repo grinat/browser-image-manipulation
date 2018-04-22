@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>browser-image-manipulation</title>
+    <script src="../dist/browser-image-manipulation.js"></script>
+</head>
+<body>
+
+<div>
+    <div class="wrapper-grid">
+        <div class="box">
+            <p>Choose image and resize to 400x800</p>
+            <input type="file" id="exampleResize">
+        </div>
+        <div class="box">
+            <img src="" id="exampleResizeImg">
+        </div>
+        <div class="box">
+            <img src="" id="exampleResizeImgServer">
+        </div>
+        <div class="box">
+            <p>Choose image to convert in circle with res 300x300</p>
+            <input type="file" id="exampleCircle">
+        </div>
+        <div class="box">
+            <img src="" id="exampleCircleImg">
+        </div>
+        <div class="box">
+            <img src="" id="exampleCircleImgServer">
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('exampleResize').addEventListener('change', function (e) {
+        let file = e.target.files[0]
+        let iM = new BrowserImageManipulation()
+            .loadBlob(file)
+            .resize(400, 800)
+
+        iM.saveAsBlob().then(blob => {
+            if (blob.size > 3000000) {
+                return new Error('Max size 3 mb')
+            }
+            uploadToServer(blob, 'exampleResizeImgServer')
+            return iM.saveAsImage()
+        }).then(base64 => {
+            document.getElementById('exampleResizeImg').src = base64
+        }).catch(e => alert(e.toString()))
+    })
+
+    document.getElementById('exampleCircle').addEventListener('change', function (e) {
+        let file = e.target.files[0]
+        let iM = new BrowserImageManipulation()
+            .loadBlob(file)
+            .resize(300, 300, {type: 'rectangle'})
+            .toCircle(300)
+
+        iM.saveAsBlob().then(blob => {
+            if (blob.size > 3000000) {
+                return new Error('Max size 3 mb')
+            }
+            uploadToServer(blob, 'exampleCircleImgServer')
+            return iM.saveAsImage()
+        }).then(base64 => {
+            document.getElementById('exampleCircleImg').src = base64
+        }).catch(e => alert(e.toString()))
+    })
+
+    function uploadToServer(blob, insertToId) {
+        let img = document.getElementById(insertToId)
+
+        let canvas = document.createElement('canvas')
+        canvas.width = 100
+        canvas.height = 50
+        let ctx = canvas.getContext('2d')
+        ctx.font = '40px'
+        ctx.fillStyle = 'red'
+        ctx.fillText('Loading to server...', 5, 10)
+        img.src = canvas.toDataURL()
+
+        setTimeout(() => {
+            img.src = URL.createObjectURL(blob)
+        }, 3000)
+    }
+</script>
+
+<style>
+    .wrapper-grid {
+        display: grid;
+        grid-template-columns: 33.3% 33.3% 33.3%;
+        grid-gap: 0;
+    }
+
+    .box {
+        border: 1px solid #eee;
+        border-radius: 5px;
+        margin: 20px;
+        padding: 20px;
+        font-size: 1.5em;
+    }
+
+    .box img{
+        width: 100%;
+        height: auto;
+    }
+</style>
+
+</body>
+</html>
