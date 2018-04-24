@@ -21,25 +21,49 @@
         <div class="box">
             <img src="" id="exampleResizeImgServer">
         </div>
+
         <div class="box">
             <p>Choose image and resize to 800x400 with red bg</p>
-            <input type="file" id="exampleFillInRectangle">
+            <input type="file" id="centerInRectangle">
         </div>
         <div class="box">
-            <img src="" id="exampleFillInRectangleImg">
+            <img src="" id="centerInRectangleImg">
         </div>
         <div class="box">
-            <img src="" id="exampleFillInRectangleServer">
+            <img src="" id="centerInRectangleServer">
         </div>
+
         <div class="box">
             <p>Choose image to convert in circle with res 400x400</p>
-            <input type="file" id="exampleCircle">
+            <input type="file" id="exampleToCircle">
         </div>
         <div class="box">
-            <img src="" id="exampleCircleImg">
+            <img src="" id="exampleToCircleImg">
         </div>
         <div class="box">
-            <img src="" id="exampleCircleImgServer">
+            <img src="" id="exampleToCircleImgServer">
+        </div>
+
+        <div class="box">
+            <p>Choose image to rotate</p>
+            <input type="file" id="exampleRotate">
+        </div>
+        <div class="box">
+            <img src="" id="exampleRotateImg">
+        </div>
+        <div class="box">
+            <img src="" id="exampleRotateImgServer">
+        </div>
+
+        <div class="box">
+            <p>Choose image to graysacle</p>
+            <input type="file" id="exampleToGrayscale">
+        </div>
+        <div class="box">
+            <img src="" id="exampleToGrayscaleImg">
+        </div>
+        <div class="box">
+            <img src="" id="exampleToGrayscaleImgServer">
         </div>
     </div>
 </div>
@@ -49,7 +73,7 @@
         let file = e.target.files[0]
         let iM = new BrowserImageManipulation()
             .loadBlob(file)
-            .resizeTo(800, 400)
+            .resize(800, 400)
 
         iM.saveAsBlob().then(blob => {
             if (blob.size > 3000000) {
@@ -62,7 +86,7 @@
         }).catch(e => alert(e.toString()))
     })
 
-    document.getElementById('exampleFillInRectangle').addEventListener('change', function (e) {
+    document.getElementById('centerInRectangle').addEventListener('change', function (e) {
         let file = e.target.files[0]
         let iM = new BrowserImageManipulation()
             .loadBlob(file)
@@ -72,14 +96,14 @@
             if (blob.size > 3000000) {
                 return new Error('Max size 3 mb')
             }
-            uploadToServer(blob, 'exampleFillInRectangleServer')
+            uploadToServer(blob, 'centerInRectangleServer')
             return iM.saveAsImage()
         }).then(base64 => {
-            document.getElementById('exampleFillInRectangleImg').src = base64
+            document.getElementById('centerInRectangleImg').src = base64
         }).catch(e => alert(e.toString()))
     })
 
-    document.getElementById('exampleCircle').addEventListener('change', function (e) {
+    document.getElementById('exampleToCircle').addEventListener('change', function (e) {
         let file = e.target.files[0]
         let iM = new BrowserImageManipulation()
             .loadBlob(file)
@@ -89,10 +113,38 @@
             if (blob.size > 3000000) {
                 return new Error('Max size 3 mb')
             }
-            uploadToServer(blob, 'exampleCircleImgServer')
+            uploadToServer(blob, 'exampleToCircleImgServer')
             return iM.saveAsImage()
         }).then(base64 => {
-            document.getElementById('exampleCircleImg').src = base64
+            document.getElementById('exampleToCircleImg').src = base64
+        }).catch(e => alert(e.toString()))
+    })
+
+    document.getElementById('exampleRotate').addEventListener('change', function (e) {
+        let file = e.target.files[0]
+        let iM = new BrowserImageManipulation()
+            .loadBlob(file)
+            .rotate(45)
+
+        iM.saveAsBlob().then(blob => {
+            uploadToServer(blob, 'exampleRotateImgServer')
+            return iM.saveAsImage()
+        }).then(base64 => {
+            document.getElementById('exampleRotateImg').src = base64
+        }).catch(e => alert(e.toString()))
+    })
+
+    document.getElementById('exampleToGrayscale').addEventListener('change', function (e) {
+        let file = e.target.files[0]
+        let iM = new BrowserImageManipulation()
+            .loadBlob(file)
+            .toGrayscale()
+
+        iM.saveAsBlob().then(blob => {
+            uploadToServer(blob, 'exampleToGrayscaleImgServer')
+            return iM.saveAsImage()
+        }).then(base64 => {
+            document.getElementById('exampleToGrayscaleImg').src = base64
         }).catch(e => alert(e.toString()))
     })
 

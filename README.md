@@ -11,18 +11,20 @@ npm install browser-image-manipulation --save
 [Open](https://github.com/grinat/browser-image-manipulation/blob/master/examples/index.html) (see in /examples)
 
 ### Usage
-```javascript
+```
 import BrowserImageManipulation from 'browser-image-manipulation'
 
+let picaOptions = {} // see pica options
 let iM = new BrowserImageManipulation()
-            .loadBlob(file)
-            .toCircle(300)
+            .loadBlob(e.target.files[0])
+            .toCircle(300, {pica: picaOptions})
+            .toGrayscale()
             
 iM.saveAsBlob().then(blob => {
     if (blob.size > 3000000) {
         return new Error('Max size 3 mb')
     }
-    // uploadToServer(blob, 'myCircleImage')
+    // uploadToServer(blob, 'my circle black and white image')
     return iM.saveAsImage()
 }).then(base64 => {
     document.getElementByTag('img')[0].src = base64
