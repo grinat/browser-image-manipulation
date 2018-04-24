@@ -16,7 +16,6 @@ import BrowserImageManipulation from 'browser-image-manipulation'
 
 let iM = new BrowserImageManipulation()
             .loadBlob(file)
-            .resize(300, 300, {type: 'rectangle'})
             .toCircle(300)
             
 iM.saveAsBlob().then(blob => {
