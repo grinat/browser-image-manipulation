@@ -6,6 +6,28 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>browser-image-manipulation</title>
     <script src="../dist/browser-image-manipulation.js"></script>
+    <style>
+        .wrapper-grid {
+            display: grid;
+            grid-template-columns: 33.3% 33.3% 33.3%;
+            grid-gap: 0;
+        }
+
+        .box {
+            border: 1px solid #eee;
+            border-radius: 5px;
+            margin: 20px;
+            padding: 20px;
+            font-size: 1.5em;
+            text-align: center;
+        }
+
+        .box img{
+            width: auto;
+            max-width: 100%;
+            max-height: 400px;
+        }
+    </style>
 </head>
 <body>
 
@@ -157,7 +179,7 @@
         let ctx = canvas.getContext('2d')
         ctx.font = '40px'
         ctx.fillStyle = 'red'
-        ctx.fillText('Loading to server...', 5, 10)
+        ctx.fillText('Uploading to server...', 5, 10)
         img.src = canvas.toDataURL()
 
         setTimeout(() => {
@@ -165,29 +187,6 @@
         }, 3000)
     }
 </script>
-
-<style>
-    .wrapper-grid {
-        display: grid;
-        grid-template-columns: 33.3% 33.3% 33.3%;
-        grid-gap: 0;
-    }
-
-    .box {
-        border: 1px solid #eee;
-        border-radius: 5px;
-        margin: 20px;
-        padding: 20px;
-        font-size: 1.5em;
-        text-align: center;
-    }
-
-    .box img{
-        width: auto;
-        max-width: 100%;
-        max-height: 400px;
-    }
-</style>
 
 </body>
 </html>

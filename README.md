@@ -8,7 +8,7 @@ npm install browser-image-manipulation --save
 ```
 
 ### Examples
-[Open](https://github.com/grinat/browser-image-manipulation/blob/master/examples/index.html) (see in /examples)
+[Open](https://htmlpreview.github.io/?https://github.com/grinat/browser-image-manipulation/blob/master/examples/index.html) (see in /examples)
 
 ### Usage
 ```
