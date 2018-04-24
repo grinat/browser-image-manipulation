@@ -25,13 +25,14 @@ export default function (maxWidth = 200, maxHeight = 100, type = null, options =
             newHeight = height * ratio
             newWidth = width * ratio
         } else if(type === RESIZE_TYPE_TO) {
-            ratio = width / height
-            if (width > height) {
-                newHeight = maxWidth / ratio
+            let ratioWidth = width / maxWidth
+            let ratioHeight = height / maxHeight
+            if(ratioWidth > ratioHeight) {
+                newHeight = Math.round(height / ratioWidth)
                 newWidth = maxWidth
             } else {
+                newWidth = Math.round(width / ratioHeight)
                 newHeight = maxHeight
-                newWidth = maxHeight * ratio
             }
         } else {
             reject(new Error('Unknown resize type'))
