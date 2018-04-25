@@ -2,7 +2,14 @@ import pica from 'pica/dist/pica'
 
 import {RESIZE_TYPE_SQUARE, RESIZE_TYPE_TO} from '../types/types'
 
-export default function (maxWidth = 200, maxHeight = 100, type = null, options = {}) {
+/**
+ * @param maxWidth
+ * @param maxHeight
+ * @param type
+ * @param options{Object}
+ * @returns {function(*=): Promise<HTMLCanvasElement>}
+ */
+export default function (maxWidth, maxHeight, type = null, options = {}) {
     let resizeOptions = Object.assign({
         pica: {}
     }, options)

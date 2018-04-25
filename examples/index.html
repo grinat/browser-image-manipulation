@@ -68,6 +68,7 @@
 
         <div class="box">
             <p>Choose image to rotate</p>
+            <p><a href="#" id="exampleRotateChangeDegree">Rotate by 10 degree</a></p>
             <input type="file" id="exampleRotate">
         </div>
         <div class="box">
@@ -142,19 +143,26 @@
         }).catch(e => alert(e.toString()))
     })
 
+    let iMRotate = new BrowserImageManipulation()
+    let angle = 10
     document.getElementById('exampleRotate').addEventListener('change', function (e) {
         let file = e.target.files[0]
-        let iM = new BrowserImageManipulation()
-            .loadBlob(file)
-            .rotate(45)
-
-        iM.saveAsBlob().then(blob => {
+        iMRotate.loadBlob(file)
+        rotate()
+    })
+    document.getElementById('exampleRotateChangeDegree').addEventListener('click', function (e) {
+        e.preventDefault()
+        angle = angle + 10
+        rotate()
+    })
+    function rotate() {
+        iMRotate.rotate(angle).saveAsBlob().then(blob => {
             uploadToServer(blob, 'exampleRotateImgServer')
-            return iM.saveAsImage()
+            return iMRotate.saveAsImage()
         }).then(base64 => {
             document.getElementById('exampleRotateImg').src = base64
         }).catch(e => alert(e.toString()))
-    })
+    }
 
     document.getElementById('exampleToGrayscale').addEventListener('change', function (e) {
         let file = e.target.files[0]

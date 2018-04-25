@@ -1,3 +1,7 @@
+/**
+ * @param imageFile{File}
+ * @returns {function(): Promise<HTMLCanvasElement>}
+ */
 export default function (imageFile) {
     return () => new Promise((resolve, reject) => {
         let image = document.createElement('img')

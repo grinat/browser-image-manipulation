@@ -4,43 +4,91 @@ import rotate from './manipulations/rotate.js'
 import centerInRectangle from './manipulations/centerInRectangle.js'
 import circle from './manipulations/circle.js'
 import grayscale from './filters/grayscale.js'
-import fileExtByMimeType from './helpers/fileExtByMimeType.js'
+import asBlob from './savers/asBlob'
+import asCanvas from './savers/asCanvas'
+import asImage from './savers/asImage'
 
 import {RESIZE_TYPE_SQUARE, RESIZE_TYPE_TO, MANIPULATION, LOADER, FILTER} from './types/types'
 
 class ImageManipulation {
     _tasks = []
+
     _canvas = null
+    _loadedCanvas = null
+    _lastCanvas = null
+
     _fileName = null
 
+    /**
+     * @param imageFile{File}
+     * @returns {ImageManipulation}
+     */
     loadBlob(imageFile) {
         this._addToTask(LOADER, loadBlob(imageFile))
         return this
     }
 
+    /**
+     * @param maxWidth
+     * @param maxHeight
+     * @param type
+     * @param options
+     * @returns {ImageManipulation}
+     * @private
+     */
     _imageResize(maxWidth = 200, maxHeight = 100, type = null, options = {}) {
         this._addToTask(MANIPULATION, imageResize(maxWidth, maxHeight, type, options))
         return this
     }
 
+    /**
+     * @param length
+     * @param opts{Object}
+     * @returns {ImageManipulation}
+     */
     toSquare (length = 150, opts = {}) {
         return this._imageResize(length, length, RESIZE_TYPE_SQUARE, opts)
     }
 
+    /**
+     *
+     * @param maxWidth
+     * @param maxHeight
+     * @param opts{Object}
+     * @returns {ImageManipulation}
+     */
     resize (maxWidth = 200, maxHeight = 100, opts = {}) {
         return this._imageResize(maxWidth, maxHeight, RESIZE_TYPE_TO, opts)
     }
 
+    /**
+     *
+     * @param degrees
+     * @param opts{Object}
+     * @returns {ImageManipulation}
+     */
     rotate (degrees, opts = {}) {
         this._addToTask(MANIPULATION, rotate(degrees, opts))
         return this
     }
 
+    /**
+     *
+     * @param opts{Object}
+     * @returns {ImageManipulation}
+     */
     toGrayscale (opts = {}) {
         this._addToTask(FILTER, grayscale(opts))
         return this
     }
 
+    /**
+     *
+     * @param width
+     * @param height
+     * @param opts{Object}
+     * @returns {ImageManipulation}
+     */
     centerInRectangle (width = 200, height = 100, opts = {}) {
         // resize
         this._imageResize(width, height, RESIZE_TYPE_TO, opts)
@@ -49,6 +97,11 @@ class ImageManipulation {
         return this
     }
 
+    /**
+     * @param diametr
+     * @param opts{Object}
+     * @returns {ImageManipulation}
+     */
     toCircle (diametr = 150, opts = {}) {
         // resize to square first
         this._imageResize(diametr, diametr, RESIZE_TYPE_SQUARE, opts)
@@ -56,53 +109,88 @@ class ImageManipulation {
         return this
     }
 
-    async _runTasks () {
+    /**
+     * @returns {Promise<boolean>}
+     */
+    async runTasks () {
+        this._canvas = null
         for (let i = 0; i < this._tasks.length; i++) {
+            // if type loader, covert image to canvas and save in _loadedCanvas
             if(this._tasks[i].type === LOADER) {
-                let data = await this._tasks[i].func(this._canvas)
-                this._canvas = data.canvas
+                let data = await this._tasks[i].func()
+                this._loadedCanvas = data.canvas
                 this._fileName = data.fileName
             } else {
-                this._canvas = await this._tasks[i].func(this._canvas)
+                // if exist only _loadedCanvas get _loadedCanvas
+                if(this._canvas === null) {
+                    this._canvas = await this._tasks[i].func(this._loadedCanvas)
+                } else if (this._canvas !== null) {
+                    this._canvas = await this._tasks[i].func(this._canvas)
+                } else {
+                    throw new Error('use loadBlob first')
+                }
             }
         }
         this._cleanTasks()
         return true
     }
 
+    /**
+     * @param type{String}
+     * @param func{Function}
+     * @private
+     */
     _addToTask(type = 'manipulation', func) {
         this._tasks.push({type, func})
     }
 
     _cleanTasks(){
         this._tasks = []
+        // save last canvas
+        // for save image after all convert in same formats
+        if (this._canvas !== null) {
+            this._lastCanvas = this._canvas
+        }
     }
 
-    async saveAsCanvas () {
-        await this._runTasks()
-
-        return this._canvas
+    /**
+     * @returns {HTMLCanvasElement}
+     */
+    getCanvas () {
+        return this._canvas || this._lastCanvas
     }
 
-    async saveAsImage(mimeType = 'image/jpeg', q = '1.0') {
-        await this._runTasks()
-
-        return new Promise(resolve => {
-            let image = this._canvas.toDataURL(mimeType, q)
-            resolve(image)
-        })
+    /**
+     *
+     * @returns {String}
+     */
+    getFileName () {
+        return this._fileName
     }
 
-    async saveAsBlob(mimeType = 'image/jpeg', q = '1.0') {
-        await this._runTasks()
+    /**
+     * @param mimeType
+     * @param q
+     * @returns {Promise<File>}
+     */
+    saveAsBlob(mimeType = 'image/jpeg', q = '1.0') {
+        return asBlob(this, mimeType, q)
+    }
 
-        return new Promise(resolve => {
-            this._canvas.toBlob((blob) => {
-                let fileName = fileExtByMimeType(this._fileName, mimeType)
-                let fileOfBlob = new File([blob], fileName)
-                resolve(fileOfBlob)
-            }, mimeType, q)
-        })
+    /**
+     * @returns {Promise<HTMLCanvasElement>}
+     */
+    saveAsCanvas () {
+        return asCanvas(this)
+    }
+
+    /**
+     * @param mimeType
+     * @param q
+     * @returns {Promise<HTMLImageElement.src>}
+     */
+    saveAsImage(mimeType = 'image/jpeg', q = '1.0') {
+        return asImage(this, mimeType, q)
     }
 
 }

@@ -1,3 +1,8 @@
+/**
+ * @param fileName{string}
+ * @param mimeType{string}
+ * @returns {string}
+ */
 export default function (fileName, mimeType) {
     let tmp = fileName.split('.')
     let ext = 'jpg'

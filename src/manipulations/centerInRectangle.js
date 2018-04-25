@@ -1,5 +1,11 @@
+/**
+ * @param width
+ * @param height
+ * @param opts{Object}
+ * @returns {function(*=): Promise<HTMLCanvasElement>}
+ */
 export default function (width, height, opts = {}) {
-    let {bgColor} = opts
+    let {bgColor = 'white'} = opts
     return (canvasImage) => new Promise((resolve, reject) => {
         let canvas = document.createElement('canvas')
         canvas.width = width
