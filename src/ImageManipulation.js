@@ -112,7 +112,7 @@ class ImageManipulation {
     /**
      * @returns {Promise<boolean>}
      */
-    async runTasks () {
+    async _runTasks () {
         this._canvas = null
         for (let i = 0; i < this._tasks.length; i++) {
             // if type loader, covert image to canvas and save in _loadedCanvas
@@ -174,14 +174,14 @@ class ImageManipulation {
      * @returns {Promise<File>}
      */
     saveAsBlob(mimeType = 'image/jpeg', q = '1.0') {
-        return asBlob(this, mimeType, q)
+        return this._runTasks().then(() => asBlob(this.getCanvas(), this.getFileName(), mimeType, q))
     }
 
     /**
      * @returns {Promise<HTMLCanvasElement>}
      */
     saveAsCanvas () {
-        return asCanvas(this)
+        return this._runTasks().then(() => asCanvas(this.getCanvas()))
     }
 
     /**
@@ -190,7 +190,7 @@ class ImageManipulation {
      * @returns {Promise<HTMLImageElement.src>}
      */
     saveAsImage(mimeType = 'image/jpeg', q = '1.0') {
-        return asImage(this, mimeType, q)
+        return this._runTasks().then(() => asImage(this.getCanvas(), mimeType, q))
     }
 
 }

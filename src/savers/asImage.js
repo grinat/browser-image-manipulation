@@ -1,15 +1,12 @@
 /**
- * @param ImageManipulation{ImageManipulation}
+ * @param canvas{HTMLCanvasElement}
  * @param mimeType
  * @param q
  * @returns {Promise<HTMLImageElement.src>}
  */
-export default function (ImageManipulation, mimeType, q) {
+export default function (canvas, mimeType, q) {
     return new Promise((resolve, reject) => {
-        ImageManipulation.runTasks().then(() => {
-            let canvas = ImageManipulation.getCanvas()
-            let image = canvas.toDataURL(mimeType, q)
-            resolve(image)
-        })
+        let image = canvas.toDataURL(mimeType, q)
+        resolve(image)
     })
 }

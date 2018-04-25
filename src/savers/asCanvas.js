@@ -1,11 +1,7 @@
 /**
- * @param ImageManipulation{ImageManipulation}
+ * @param canvas{HTMLCanvasElement}
  * @returns {Promise<HTMLCanvasElement>}
  */
-export default function (ImageManipulation) {
-    return new Promise((resolve, reject) => {
-        ImageManipulation.runTasks().then(() => {
-            resolve(ImageManipulation.getCanvas())
-        })
-    })
+export default function (canvas) {
+    return Promise.resolve(canvas)
 }

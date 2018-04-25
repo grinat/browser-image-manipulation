@@ -1,20 +1,18 @@
 import fileExtByMimeType from '../helpers/fileExtByMimeType'
 
 /**
- * @param ImageManipulation{ImageManipulation}
+ * @param canvas{HTMLCanvasElement}
+ * @param fileName
  * @param mimeType
  * @param q
  * @returns {Promise<File>}
  */
-export default function (ImageManipulation, mimeType, q) {
+export default function (canvas, fileName, mimeType, q) {
     return new Promise((resolve, reject) => {
-        ImageManipulation.runTasks().then(() => {
-            let canvas = ImageManipulation.getCanvas()
-            canvas.toBlob((blob) => {
-                let fileName = fileExtByMimeType(ImageManipulation.getFileName(), mimeType)
-                let fileOfBlob = new File([blob], fileName)
-                resolve(fileOfBlob)
-            }, mimeType, q)
-        })
+        canvas.toBlob((blob) => {
+            fileName = fileExtByMimeType(fileName, mimeType)
+            let fileOfBlob = new File([blob], fileName)
+            resolve(fileOfBlob)
+        }, mimeType, q)
     })
 }

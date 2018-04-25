@@ -1,6 +1,6 @@
 {
   "name": "browser-image-manipulation",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Convert and manipulate image on JS in browser.",
   "main": "dist/browser-image-manipulation.js",
   "repository": {
