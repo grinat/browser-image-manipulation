@@ -11,7 +11,7 @@ export default function (canvas, fileName, mimeType, q) {
     return new Promise((resolve, reject) => {
         canvas.toBlob((blob) => {
             fileName = fileExtByMimeType(fileName, mimeType)
-            let fileOfBlob = new File([blob], fileName)
+            let fileOfBlob = new File([blob], fileName, {type: mimeType})
             resolve(fileOfBlob)
         }, mimeType, q)
     })

@@ -8,9 +8,10 @@ export default function (fileName, mimeType) {
     let ext = 'jpg'
     if (mimeType.indexOf('png') > -1) {
         ext = 'png'
-    } else if (mimeType.indexOf('webp')) {
+    } else if (mimeType.indexOf('webp') > -1) {
         ext = 'webp'
     }
+    tmp.pop()
     tmp.push(ext)
     return tmp.join('.')
 }

@@ -1,6 +1,6 @@
 {
   "name": "browser-image-manipulation",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Convert and manipulate image on JS in browser.",
   "main": "dist/browser-image-manipulation.js",
   "typings": "types/index.d.ts",
