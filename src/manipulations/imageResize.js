@@ -1,6 +1,6 @@
-import pica from 'pica/dist/pica'
+import Pica from 'pica/dist/pica'
 
-import {RESIZE_TYPE_SQUARE, RESIZE_TYPE_TO} from '../types/types'
+import {RESIZE_TYPE_SQUARE, RESIZE_TYPE_TO} from '../constants'
 
 /**
  * @param maxWidth
@@ -31,10 +31,10 @@ export default function (maxWidth, maxHeight, type = null, options = {}) {
             }
             newHeight = height * ratio
             newWidth = width * ratio
-        } else if(type === RESIZE_TYPE_TO) {
+        } else if (type === RESIZE_TYPE_TO) {
             let ratioWidth = width / maxWidth
             let ratioHeight = height / maxHeight
-            if(ratioWidth > ratioHeight) {
+            if (ratioWidth > ratioHeight) {
                 newHeight = Math.round(height / ratioWidth)
                 newWidth = maxWidth
             } else {
@@ -48,7 +48,7 @@ export default function (maxWidth, maxHeight, type = null, options = {}) {
         canvas.width = newWidth
         canvas.height = newHeight
 
-        let picaInstanse = new pica()
+        let picaInstanse = new Pica()
         picaInstanse.resize(canvasImage, canvas, resizeOptions.pica).then(resizedCanvas => {
             if (type === RESIZE_TYPE_SQUARE) {
                 let dx = 0

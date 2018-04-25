@@ -3,6 +3,7 @@
   "version": "0.1.1",
   "description": "Convert and manipulate image on JS in browser.",
   "main": "dist/browser-image-manipulation.js",
+  "typings": "types/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/grinat/browser-image-manipulation.git"
@@ -39,6 +40,8 @@
     "eslint-config-standard": "^6.2.1",
     "eslint-plugin-promise": "^3.4.0",
     "eslint-plugin-standard": "^2.0.1",
+    "eslint-plugin-html": "^3.2.2",
+    "eslint-plugin-import": "^2.7.0",
     "rollup": "^0.41.6",
     "rollup-plugin-babel": "^2.7.1",
     "rollup-plugin-commonjs": "^8.0.2",

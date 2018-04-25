@@ -8,7 +8,7 @@ import asBlob from './savers/asBlob'
 import asCanvas from './savers/asCanvas'
 import asImage from './savers/asImage'
 
-import {RESIZE_TYPE_SQUARE, RESIZE_TYPE_TO, MANIPULATION, LOADER, FILTER} from './types/types'
+import {RESIZE_TYPE_SQUARE, RESIZE_TYPE_TO, MANIPULATION, LOADER, FILTER} from './constants'
 
 class ImageManipulation {
     _tasks = []
@@ -23,7 +23,7 @@ class ImageManipulation {
      * @param imageFile{File}
      * @returns {ImageManipulation}
      */
-    loadBlob(imageFile) {
+    loadBlob (imageFile) {
         this._addToTask(LOADER, loadBlob(imageFile))
         return this
     }
@@ -36,7 +36,7 @@ class ImageManipulation {
      * @returns {ImageManipulation}
      * @private
      */
-    _imageResize(maxWidth = 200, maxHeight = 100, type = null, options = {}) {
+    _imageResize (maxWidth = 200, maxHeight = 100, type = null, options = {}) {
         this._addToTask(MANIPULATION, imageResize(maxWidth, maxHeight, type, options))
         return this
     }
@@ -116,13 +116,13 @@ class ImageManipulation {
         this._canvas = null
         for (let i = 0; i < this._tasks.length; i++) {
             // if type loader, covert image to canvas and save in _loadedCanvas
-            if(this._tasks[i].type === LOADER) {
+            if (this._tasks[i].type === LOADER) {
                 let data = await this._tasks[i].func()
                 this._loadedCanvas = data.canvas
                 this._fileName = data.fileName
             } else {
                 // if exist only _loadedCanvas get _loadedCanvas
-                if(this._canvas === null) {
+                if (this._canvas === null) {
                     this._canvas = await this._tasks[i].func(this._loadedCanvas)
                 } else if (this._canvas !== null) {
                     this._canvas = await this._tasks[i].func(this._canvas)
@@ -140,11 +140,11 @@ class ImageManipulation {
      * @param func{Function}
      * @private
      */
-    _addToTask(type = 'manipulation', func) {
+    _addToTask (type = 'manipulation', func) {
         this._tasks.push({type, func})
     }
 
-    _cleanTasks(){
+    _cleanTasks () {
         this._tasks = []
         // save last canvas
         // for save image after all convert in same formats
@@ -173,7 +173,7 @@ class ImageManipulation {
      * @param q
      * @returns {Promise<File>}
      */
-    saveAsBlob(mimeType = 'image/jpeg', q = '1.0') {
+    saveAsBlob (mimeType = 'image/jpeg', q = '1.0') {
         return this._runTasks().then(() => asBlob(this.getCanvas(), this.getFileName(), mimeType, q))
     }
 
@@ -189,10 +189,9 @@ class ImageManipulation {
      * @param q
      * @returns {Promise<HTMLImageElement.src>}
      */
-    saveAsImage(mimeType = 'image/jpeg', q = '1.0') {
+    saveAsImage (mimeType = 'image/jpeg', q = '1.0') {
         return this._runTasks().then(() => asImage(this.getCanvas(), mimeType, q))
     }
-
 }
 
 export default ImageManipulation
