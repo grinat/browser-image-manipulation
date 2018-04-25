@@ -30,3 +30,12 @@ iM.saveAsBlob().then(blob => {
     document.getElementByTag('img')[0].src = base64
 }).catch(e => alert(e.toString()))
 ```
+
+If use UglifyJs set in comperss evaluate to false
+```
+compress: {
+  ...
+  evaluate: false
+  ...
+}
+```
