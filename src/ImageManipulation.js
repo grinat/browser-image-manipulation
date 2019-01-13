@@ -1,4 +1,5 @@
 import loadBlob from './loaders/loadBlob.js'
+import loadCanvas from './loaders/loadCanvas.js'
 import imageResize from './manipulations/imageResize.js'
 import rotate from './manipulations/rotate.js'
 import centerInRectangle from './manipulations/centerInRectangle.js'
@@ -11,13 +12,16 @@ import asImage from './savers/asImage'
 import {RESIZE_TYPE_SQUARE, RESIZE_TYPE_TO, MANIPULATION, LOADER, FILTER} from './constants'
 
 class ImageManipulation {
-    _tasks = []
 
-    _canvas = null
-    _loadedCanvas = null
-    _lastCanvas = null
+    constructor () {
+        this._tasks = []
 
-    _fileName = null
+        this._canvas = null
+        this._loadedCanvas = null
+        this._lastCanvas = null
+
+        this._fileName = null
+    }
 
     /**
      * @param imageFile{File}
@@ -25,6 +29,16 @@ class ImageManipulation {
      */
     loadBlob (imageFile) {
         this._addToTask(LOADER, loadBlob(imageFile))
+        return this
+    }
+
+    /**
+     * @param canvas{HTMLCanvasElement}
+     * @param fileName{String}
+     * @returns {ImageManipulation}
+     */
+    loadCanvas (canvas, fileName = 'canvas.png') {
+        this._addToTask(LOADER, loadCanvas(canvas, fileName))
         return this
     }
 

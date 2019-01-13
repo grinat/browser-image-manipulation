@@ -1,5 +1,6 @@
 export interface BrowserImageManipulation {
     loadBlob(imageFile: File): this;
+    loadCanvas(canvas: HTMLCanvasElement): this;
     toSquare(length: number, opts: Object): this;
     resize(maxWidth: number, maxHeight: number, opts: Object): this;
     rotate(degrees: number, opts: Object): this;

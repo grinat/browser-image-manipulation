@@ -44,8 +44,8 @@ export default function (degrees, opts = {}) {
             }
         }
         // calc w/h on rotate changes
-        canvas.width =  canvasImage.width * sinCos.cosAngle + canvasImage.height * sinCos.cosCalcAngle + padding
-        canvas.height =  canvasImage.width * sinCos.sinAngle + canvasImage.height * sinCos.sinCalcAngle + padding
+        canvas.width = canvasImage.width * sinCos.cosAngle + canvasImage.height * sinCos.cosCalcAngle + padding
+        canvas.height = canvasImage.width * sinCos.sinAngle + canvasImage.height * sinCos.sinCalcAngle + padding
 
         let ctx = canvas.getContext('2d')
         // set bg

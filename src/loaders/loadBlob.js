@@ -1,6 +1,6 @@
 /**
  * @param imageFile{File}
- * @returns {function(): Promise<HTMLCanvasElement>}
+ * @returns {function(): Promise<{canvas: HTMLCanvasElement, fileName: String}>}
  */
 export default function (imageFile) {
     return () => new Promise((resolve, reject) => {
