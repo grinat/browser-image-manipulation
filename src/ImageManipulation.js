@@ -5,6 +5,8 @@ import rotate from './manipulations/rotate.js'
 import centerInRectangle from './manipulations/centerInRectangle.js'
 import circle from './manipulations/circle.js'
 import grayscale from './filters/grayscale.js'
+import {pixelize} from './filters/pixelize.js'
+import {gaussianBlur} from './filters/gaussianBlur.js'
 import asBlob from './savers/asBlob'
 import asCanvas from './savers/asCanvas'
 import asImage from './savers/asImage'
@@ -98,6 +100,26 @@ class ImageManipulation {
 
     /**
      *
+     * @param threshold{Number}
+     * @returns {ImageManipulation}
+     */
+    pixelize (threshold = 0.2) {
+        this._addToTask(FILTER, pixelize(threshold))
+        return this
+    }
+
+    /**
+     *
+     * @param radius{Number}
+     * @returns {ImageManipulation}
+     */
+    gaussianBlur (radius = 10) {
+        this._addToTask(FILTER, gaussianBlur(radius))
+        return this
+    }
+
+    /**
+     *
      * @param width
      * @param height
      * @param opts{Object}
@@ -124,7 +146,7 @@ class ImageManipulation {
     }
 
     /**
-     * @returns {Promise<boolean>}
+     * @returns {Promise}
      */
     async _runTasks () {
         this._canvas = null
@@ -135,18 +157,13 @@ class ImageManipulation {
                 this._loadedCanvas = data.canvas
                 this._fileName = data.fileName
             } else {
-                // if exist only _loadedCanvas get _loadedCanvas
-                if (this._canvas === null) {
-                    this._canvas = await this._tasks[i].func(this._loadedCanvas)
-                } else if (this._canvas !== null) {
-                    this._canvas = await this._tasks[i].func(this._canvas)
-                } else {
+                if (this._canvas === null && this._loadedCanvas === null) {
                     throw new Error('use loadBlob first')
                 }
+                this._canvas = await this._tasks[i].func(this._canvas || this._loadedCanvas)
             }
         }
         this._cleanTasks()
-        return true
     }
 
     /**

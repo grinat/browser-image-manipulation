@@ -88,6 +88,24 @@
         <div class="box">
             <img src="" id="exampleToGrayscaleImgServer">
         </div>
+
+        <div class="box">
+            <p>Choose image to pixelize</p>
+            <input type="file" id="examplePixelize">
+        </div>
+        <div class="box">
+            <img src="" id="examplePixelizeImg">
+        </div>
+        <div class="box"></div>
+
+        <div class="box">
+            <p>Choose image to blur</p>
+            <input type="file" id="exampleBlur">
+        </div>
+        <div class="box">
+            <img src="" id="exampleBlurImg">
+        </div>
+        <div class="box"></div>
     </div>
 </div>
 
@@ -176,6 +194,26 @@
         }).then(base64 => {
             document.getElementById('exampleToGrayscaleImg').src = base64
         }).catch(e => alert(e.toString()))
+    })
+
+    document.getElementById('examplePixelize').addEventListener('change', function (e) {
+        new BrowserImageManipulation()
+            .loadBlob(e.target.files[0])
+            .pixelize()
+            .saveAsImage()
+            .then(base64 => {
+                document.getElementById('examplePixelizeImg').src = base64
+            }).catch(e => alert(e.toString()))
+    })
+
+    document.getElementById('exampleBlur').addEventListener('change', function (e) {
+        new BrowserImageManipulation()
+            .loadBlob(e.target.files[0])
+            .gaussianBlur()
+            .saveAsImage()
+            .then(base64 => {
+                document.getElementById('exampleBlurImg').src = base64
+            }).catch(e => alert(e.toString()))
     })
 
     function uploadToServer(blob, insertToId) {
