@@ -1,6 +1,6 @@
 /* global describe, it, expect */
 import {getFixture, getDiffOfFixture} from './helpers/fixture'
-import ImageManipulation from '../src/ImageManipulation.js'
+import {ImageManipulation} from '../src/ImageManipulation.js'
 
 describe('Filters', () => {
     it('grayscale image', async () => {

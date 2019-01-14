@@ -1,6 +1,6 @@
 /* global describe, it, expect */
 import {getFixture, getDiffOfFixture} from './helpers/fixture'
-import ImageManipulation from '../src/ImageManipulation.js'
+import {ImageManipulation} from '../src/ImageManipulation.js'
 
 describe('Variations', () => {
     it('resize and return canvas and base64 image', async () => {

@@ -3,7 +3,7 @@
  * @param opts{Object}
  * @returns {function(*=): Promise<HTMLCanvasElement>}
  */
-export default function (diametr, opts = {}) {
+export function circle (diametr, opts = {}) {
     let {padding = 4, bgColor = 'white'} = opts
     return (canvasImage) => new Promise((resolve, reject) => {
         let canvas = document.createElement('canvas')

@@ -1,6 +1,6 @@
 /* global describe, it, expect */
 import {getFixture, getDiffOfFixture} from './helpers/fixture'
-import ImageManipulation from '../src/ImageManipulation.js'
+import {ImageManipulation} from '../src/ImageManipulation.js'
 
 describe('Manipulations', () => {
     it('convert image to 50 px circle', async () => {

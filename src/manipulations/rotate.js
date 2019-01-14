@@ -1,17 +1,16 @@
-import degreesToRadian from '../helpers/degreesToRadian.js'
+import {degreesToRadian} from '../helpers/degreesToRadian.js'
 
 /**
  * @param degrees
  * @param opts{Object}
  * @returns {function(*=): Promise<HTMLCanvasElement>}
  */
-export default function (degrees, opts = {}) {
+export function rotate (degrees, opts = {}) {
     let {padding = 0, bgColor = 'white'} = opts
 
     return (canvasImage) => new Promise((resolve, reject) => {
         let canvas = document.createElement('canvas')
         let calcAngle = 0
-        let angle = degrees
 
         if (degrees < 0) {
             degrees = 360 + degrees
@@ -19,16 +18,14 @@ export default function (degrees, opts = {}) {
 
         // get angle
         if (degrees >= 0 && degrees <= 90) {
-            angle = degrees
-            calcAngle = 90 - angle
+            calcAngle = 90 - degrees
         } else {
-            angle = degrees
-            calcAngle = 270 - angle
+            calcAngle = 270 - degrees
         }
         // to rad
         let degreesRad = degreesToRadian(degrees)
         let calcAngleRad = degreesToRadian(calcAngle)
-        let angleRad = degreesToRadian(angle)
+        let angleRad = degreesToRadian(degrees)
         // calc sin cos
         let sinCos = {
             cosAngle: Math.cos(angleRad),

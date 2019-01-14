@@ -1,4 +1,4 @@
-import fileExtByMimeType from '../helpers/fileExtByMimeType'
+import {fileExtByMimeType} from '../helpers/fileExtByMimeType'
 
 /**
  * @param canvas{HTMLCanvasElement}
@@ -7,7 +7,7 @@ import fileExtByMimeType from '../helpers/fileExtByMimeType'
  * @param q
  * @returns {Promise<File>}
  */
-export default function (canvas, fileName, mimeType, q) {
+export function asBlob (canvas, fileName, mimeType, q) {
     return new Promise((resolve, reject) => {
         canvas.toBlob((blob) => {
             fileName = fileExtByMimeType(fileName, mimeType)

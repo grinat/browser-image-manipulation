@@ -2,6 +2,6 @@
  * @param canvas{HTMLCanvasElement}
  * @returns {Promise<HTMLCanvasElement>}
  */
-export default function (canvas) {
+export function asCanvas (canvas) {
     return Promise.resolve(canvas)
 }

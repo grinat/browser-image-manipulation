@@ -1,20 +1,19 @@
-import loadBlob from './loaders/loadBlob.js'
-import loadCanvas from './loaders/loadCanvas.js'
-import imageResize from './manipulations/imageResize.js'
-import rotate from './manipulations/rotate.js'
-import centerInRectangle from './manipulations/centerInRectangle.js'
-import circle from './manipulations/circle.js'
-import grayscale from './filters/grayscale.js'
+import {loadBlob} from './loaders/loadBlob.js'
+import {loadCanvas} from './loaders/loadCanvas.js'
+import {imageResize} from './manipulations/imageResize.js'
+import {rotate} from './manipulations/rotate.js'
+import {centerInRectangle} from './manipulations/centerInRectangle.js'
+import {circle} from './manipulations/circle.js'
+import {grayscale} from './filters/grayscale.js'
 import {pixelize} from './filters/pixelize.js'
 import {gaussianBlur} from './filters/gaussianBlur.js'
-import asBlob from './savers/asBlob'
-import asCanvas from './savers/asCanvas'
-import asImage from './savers/asImage'
+import {asBlob} from './savers/asBlob'
+import {asCanvas} from './savers/asCanvas'
+import {asImage} from './savers/asImage'
 
 import {RESIZE_TYPE_SQUARE, RESIZE_TYPE_TO, MANIPULATION, LOADER, FILTER} from './constants'
 
-class ImageManipulation {
-
+export class ImageManipulation {
     constructor () {
         this._tasks = []
 
@@ -224,5 +223,3 @@ class ImageManipulation {
         return this._runTasks().then(() => asImage(this.getCanvas(), mimeType, q))
     }
 }
-
-export default ImageManipulation

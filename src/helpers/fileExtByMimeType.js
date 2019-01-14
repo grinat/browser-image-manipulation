@@ -3,7 +3,7 @@
  * @param mimeType{string}
  * @returns {string}
  */
-export default function (fileName, mimeType) {
+export function fileExtByMimeType (fileName, mimeType) {
     let tmp = fileName.split('.')
     let ext = 'jpg'
     if (mimeType.indexOf('png') > -1) {

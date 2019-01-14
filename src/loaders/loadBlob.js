@@ -2,7 +2,7 @@
  * @param imageFile{File}
  * @returns {function(): Promise<{canvas: HTMLCanvasElement, fileName: String}>}
  */
-export default function (imageFile) {
+export function loadBlob (imageFile) {
     return () => new Promise((resolve, reject) => {
         let image = document.createElement('img')
         let reader = new FileReader()

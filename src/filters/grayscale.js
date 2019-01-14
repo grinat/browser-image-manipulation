@@ -2,7 +2,7 @@
  * @param opts{Object}
  * @returns {function(*=): Promise<HTMLCanvasElement>}
  */
-export default function (opts = {}) {
+export function grayscale (opts = {}) {
     let {rQ = 0.34, gQ = 0.5, bQ = 0.16} = opts
 
     return (canvasImage) => new Promise((resolve, reject) => {

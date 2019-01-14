@@ -9,7 +9,7 @@ import {RESIZE_TYPE_SQUARE, RESIZE_TYPE_TO} from '../constants'
  * @param options{Object}
  * @returns {function(*=): Promise<HTMLCanvasElement>}
  */
-export default function (maxWidth, maxHeight, type = null, options = {}) {
+export function imageResize (maxWidth, maxHeight, type = null, options = {}) {
     let resizeOptions = Object.assign({
         pica: {}
     }, options)

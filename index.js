@@ -1,8 +1,8 @@
 import 'regenerator-runtime/runtime'
-import BrowserImageManipulation from './src/ImageManipulation.js'
+import {ImageManipulation} from './src/ImageManipulation.js'
 
 if (typeof window !== 'undefined') {
-    window.BrowserImageManipulation = BrowserImageManipulation
+    window.BrowserImageManipulation = ImageManipulation
 }
 
-export default BrowserImageManipulation
+export default ImageManipulation
