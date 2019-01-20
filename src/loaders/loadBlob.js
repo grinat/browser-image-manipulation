@@ -9,13 +9,19 @@ export function loadBlob (imageFile) {
         reader.onload = (data) => {
             image.src = data.target.result
         }
-        image.onload = (data) => {
+        reader.onerror = () => {
+            reject(new Error('Image read error'))
+        }
+        image.onload = () => {
             let canvas = document.createElement('canvas')
             canvas.width = image.width
             canvas.height = image.height
             let ctx = canvas.getContext('2d')
             ctx.drawImage(image, 0, 0, canvas.width, canvas.height)
             resolve({canvas, fileName: imageFile.name})
+        }
+        image.onerror = () => {
+            reject(new Error('Invalid image'))
         }
         reader.readAsDataURL(imageFile)
     })

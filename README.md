@@ -32,11 +32,24 @@ Output formats:
 - base64 image
 
 ### Usage
+One format:
 ```
 import BrowserImageManipulation from 'browser-image-manipulation'
 
-// return in multiple formats
-let picaOptions = {} // see pica options
+new BrowserImageManipulation()
+   .loadBlob(e.target.files[0])
+   .gaussianBlur()
+   .saveAsImage()
+   .then(base64 => {
+      alert('Blured done!')
+   })
+   .catch(e => alert(e.toString()))
+```
+Multi format:
+```
+import BrowserImageManipulation from 'browser-image-manipulation'
+
+let picaOptions = {} // optional, see pica options
 let iM = new BrowserImageManipulation()
             .loadBlob(e.target.files[0])
             .toCircle(300, {pica: picaOptions})
@@ -51,15 +64,6 @@ iM.saveAsBlob().then(blob => {
 }).then(base64 => {
     document.getElementByTag('img')[0].src = base64
 }).catch(e => alert(e.toString()))
-
-// one format
-new ImageManipulation()
-   .loadBlob(e.target.files[0])
-   .gaussianBlur()
-   .saveAsImage()
-   .then(base64 => {
-      alert('Blured done!')
-   })
 ```
 
 

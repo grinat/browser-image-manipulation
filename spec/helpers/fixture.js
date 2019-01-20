@@ -1,15 +1,22 @@
 const Canvas = require('canvas')
 const fs = require('fs')
+const path = require('path')
 const pixelmatch = require('pixelmatch')
+// need mime(<2.0.0) with lookup function
+const File = require('file-api').File
 
 export function getFixture (name) {
     const img = new Canvas.Image()
-    img.src = fs.readFileSync(__dirname + '/../fixtures/' + name)
+    img.src = fs.readFileSync(path.join(__dirname, '..', 'fixtures', name))
 
     const cnv = Canvas.createCanvas(img.width, img.height)
     const ctx = cnv.getContext('2d')
     ctx.drawImage(img, 0, 0, img.width, img.height)
     return cnv
+}
+
+export function getFixtureFile (name) {
+    return new File(path.join(__dirname, '..', 'fixtures', name))
 }
 
 export function getDiffOfFixture (outCanvas, fixtureName, method) {
@@ -35,7 +42,7 @@ export function getDiffOfFixture (outCanvas, fixtureName, method) {
     diffCtx.putImageData(diffImageData, 0, 0)
     diffCanvas
         .pngStream()
-        .pipe(fs.createWriteStream(__dirname + '/../out/' + method + '-diff-of-' + fixtureName + '.png'))
+        .pipe(fs.createWriteStream(path.join(__dirname, '..', 'out', + method + '-diff-of-' + fixtureName + '.png')))
 
     saveCanvas(outCanvas, method)
 
@@ -49,5 +56,5 @@ export function saveCanvas (canvas, method) {
     const saveCCtx = saveC.getContext('2d')
     saveCCtx.putImageData(data, 0, 0)
     const buff = saveC.toBuffer()
-    fs.writeFileSync(__dirname + '/../out/' + method + '.png', buff)
+    fs.writeFileSync(path.join(__dirname, '..', 'out', method + '.png'), buff)
 }
