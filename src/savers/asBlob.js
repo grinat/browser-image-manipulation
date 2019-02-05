@@ -10,8 +10,9 @@ import {fileExtByMimeType} from '../helpers/fileExtByMimeType'
 export function asBlob (canvas, fileName, mimeType, q) {
     return new Promise((resolve, reject) => {
         canvas.toBlob((blob) => {
-            fileName = fileExtByMimeType(fileName, mimeType)
-            let fileOfBlob = new File([blob], fileName, {type: mimeType})
+            // edge doesnt suppot new File, create Blob and set file.name
+            let fileOfBlob = new Blob([blob], {type: mimeType})
+            fileOfBlob.name = fileExtByMimeType(fileName, mimeType)
             resolve(fileOfBlob)
         }, mimeType, q)
     })

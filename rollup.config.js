@@ -12,11 +12,7 @@ export default {
         babel({
             exclude: 'node_modules/**'
         }),
-        uglify({
-            compress: {
-                drop_console: true
-            }
-        }),
+        uglify(),
         commonjs()
     ],
     sourceMap: true,

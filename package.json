@@ -1,6 +1,6 @@
 {
   "name": "browser-image-manipulation",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Convert and manipulate image on JS in browser.",
   "main": "dist/browser-image-manipulation.js",
   "typings": "types/index.d.ts",
@@ -34,6 +34,7 @@
   },
   "homepage": "https://github.com/grinat/browser-image-manipulation#readme",
   "dependencies": {
+    "blueimp-canvas-to-blob": "^3.14.0",
     "pica": "~4.1.1",
     "stackblur-canvas": "~2.2.0"
   },
