@@ -1,6 +1,6 @@
 {
   "name": "browser-image-manipulation",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Convert and manipulate image on JS in browser.",
   "main": "dist/browser-image-manipulation.js",
   "typings": "types/index.d.ts",
@@ -27,8 +27,8 @@
     "resize",
     "circle"
   ],
-  "author": "Gabdrasitov Rinat <paladin2012gnu@gmail.com>",
-  "license": "GPL-3.0-or-later",
+  "author": "Gabdrashitov Rinat <paladin2012gnu@gmail.com>",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/grinat/browser-image-manipulation/issues"
   },

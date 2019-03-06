@@ -14,6 +14,7 @@ declare module "browser-image-manipulation"{
         saveAsBlob(mimeType?: string, q?: string): Promise<File>;
         saveAsCanvas(): Promise<HTMLCanvasElement>;
         saveAsImage(mimeType?: string, q?: string): Promise<HTMLImageElement>;
+        setFileName(newFileName: string);
     }
 
     global {
