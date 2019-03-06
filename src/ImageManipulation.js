@@ -154,7 +154,9 @@ export class ImageManipulation {
             if (this._tasks[i].type === LOADER) {
                 let data = await this._tasks[i].func()
                 this._loadedCanvas = data.canvas
-                this._fileName = data.fileName
+                if (data.fileName) {
+                    this._fileName = data.fileName;
+                }
             } else {
                 if (this._canvas === null && this._loadedCanvas === null) {
                     throw new Error('use loadBlob first')
@@ -196,6 +198,14 @@ export class ImageManipulation {
      */
     getFileName () {
         return this._fileName
+    }
+
+    /**
+     *
+     * @param newFileName - New filename to be used in mime type definition
+     */
+    setFileName (newFileName) {
+        this._fileName = newFileName;
     }
 
     /**
