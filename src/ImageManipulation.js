@@ -1,6 +1,6 @@
 import {loadBlob} from './loaders/loadBlob.js'
 import {loadCanvas} from './loaders/loadCanvas.js'
-import {imageResize} from './manipulations/imageResize.js'
+import {imageCrop, imageResize} from './manipulations/imageResize.js'
 import {rotate} from './manipulations/rotate.js'
 import {centerInRectangle} from './manipulations/centerInRectangle.js'
 import {circle} from './manipulations/circle.js'
@@ -63,6 +63,16 @@ export class ImageManipulation {
      */
     toSquare (length = 150, opts = {}) {
         return this._imageResize(length, length, RESIZE_TYPE_SQUARE, opts)
+    }
+
+    /**
+     * @param width {number} - width to crop to.
+     * @param height {number} - height to crop to.
+     * @returns {ImageManipulation}
+     */
+    crop (maxWidth, maxHeight) {
+        this._addToTask(MANIPULATION, imageCrop(maxWidth, maxHeight))
+        return this
     }
 
     /**

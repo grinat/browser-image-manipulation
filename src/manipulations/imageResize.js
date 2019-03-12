@@ -3,6 +3,34 @@ import Pica from 'pica/dist/pica'
 import {RESIZE_TYPE_SQUARE, RESIZE_TYPE_TO} from '../constants'
 
 /**
+ * @param newWidth{number} - new width after crop.
+ * @param newHeight{number} - new height after crop.
+ * @returns {function(*=): Promise<HTMLCanvasElement>}
+ */
+ export function imageCrop(newWidth, newHeight) {
+    return (canvasImage) => new Promise((resolve, reject) => {
+        let dx = 0
+        let dy = 0
+        let sx = 0
+        let sy = 0
+        let width = canvasImage.width
+        let height = canvasImage.height
+
+        sy = (height - newHeight) / 2
+        sx = (width - newWidth) / 2
+
+        let cropedCanvas = document.createElement('canvas')
+        let cropedCanvasCtx = cropedCanvas.getContext('2d')
+        cropedCanvas.width = newWidth
+        cropedCanvas.height = newHeight
+
+        cropedCanvasCtx.drawImage(canvasImage, sx, sy, newWidth, newHeight, dx, dy, newWidth, newHeight)
+
+        resolve(cropedCanvas)
+    })
+ }
+
+/**
  * @param maxWidth
  * @param maxHeight
  * @param type
