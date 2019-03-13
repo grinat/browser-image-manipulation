@@ -45,6 +45,16 @@
         </div>
 
         <div class="box">
+            <p>Circle->Grayscale->Pizelize->Rotate</p>
+            <input type="file" id="exampleFluent">
+        </div>
+        <div class="box">
+            <img src="" id="exampleFluentImg">
+        </div>
+        <div class="box">
+        </div>
+
+        <div class="box">
             <p>Choose image and resize to 800x400 with red bg</p>
             <input type="file" id="centerInRectangle">
         </div>
@@ -106,6 +116,15 @@
             <img src="" id="exampleBlurImg">
         </div>
         <div class="box"></div>
+
+        <div class="box">
+            <p>Choose image for crop to 200x300</p>
+            <input type="file" id="exampleCrop">
+        </div>
+        <div class="box">
+            <img src="" id="exampleCropImg">
+        </div>
+        <div class="box"></div>
     </div>
 </div>
 
@@ -125,6 +144,19 @@
         }).then(base64 => {
             document.getElementById('exampleResizeImg').src = base64
         }).catch(e => alert(e.toString()))
+    })
+
+    document.getElementById('exampleFluent').addEventListener('change', function (e) {
+        new BrowserImageManipulation()
+            .loadBlob(e.target.files[0])
+            .toCircle(400)
+            .toGrayscale()
+            .pixelize()
+            .rotate(90)
+            .saveAsImage()
+            .then(base64 => {
+                document.getElementById('exampleFluentImg').src = base64
+            }).catch(e => alert(e.toString()))
     })
 
     document.getElementById('centerInRectangle').addEventListener('change', function (e) {
@@ -213,6 +245,16 @@
             .saveAsImage()
             .then(base64 => {
                 document.getElementById('exampleBlurImg').src = base64
+            }).catch(e => alert(e.toString()))
+    })
+
+    document.getElementById('exampleCrop').addEventListener('change', function (e) {
+        new BrowserImageManipulation()
+            .loadBlob(e.target.files[0])
+            .crop(200, 300)
+            .saveAsImage()
+            .then(base64 => {
+                document.getElementById('exampleCropImg').src = base64
             }).catch(e => alert(e.toString()))
     })
 

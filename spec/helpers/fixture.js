@@ -42,7 +42,7 @@ export function getDiffOfFixture (outCanvas, fixtureName, method) {
     diffCtx.putImageData(diffImageData, 0, 0)
     diffCanvas
         .pngStream()
-        .pipe(fs.createWriteStream(path.join(__dirname, '..', 'out', + method + '-diff-of-' + fixtureName + '.png')))
+        .pipe(fs.createWriteStream(path.join(__dirname, '..', 'out', method + '-diff-of-' + fixtureName + '.png')))
 
     saveCanvas(outCanvas, method)
 

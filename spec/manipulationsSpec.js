@@ -38,4 +38,16 @@ describe('Manipulations', () => {
         let diffPixels = getDiffOfFixture(canvas, 'resize_out.png', 'resize')
         expect(diffPixels).toBeLessThan(5)
     })
+
+    it('crop to 150x100', async () => {
+        const inputCanvas = getFixture('sample_portrait.jpg')
+
+        const canvas = await new ImageManipulation()
+            .loadCanvas(inputCanvas)
+            .crop(150, 100)
+            .saveAsCanvas()
+
+        let diffPixels = getDiffOfFixture(canvas, 'crop_out.png', 'crop')
+        expect(diffPixels).toBeLessThan(5)
+    })
 })

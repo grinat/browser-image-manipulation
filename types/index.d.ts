@@ -15,6 +15,7 @@ declare module "browser-image-manipulation"{
         saveAsCanvas(): Promise<HTMLCanvasElement>;
         saveAsImage(mimeType?: string, q?: string): Promise<HTMLImageElement>;
         setFileName(newFileName: string);
+        crop(maxWidth: number, maxHeight: number);
     }
 
     global {

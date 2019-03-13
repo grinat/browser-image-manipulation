@@ -21,8 +21,9 @@ Filters:
 
 Manipulations:
 - rotate
-- crop to circle
-- crop to square
+- crop
+- crop to circle with resize
+- crop to square with resize
 - resize by max height/max width (used [pica](https://github.com/nodeca/pica) for correct resize image)
 - resize to fit in rectangle (proportion saved, empty space filled by color)
 
@@ -33,7 +34,7 @@ Output formats:
 
 ### Usage
 One format:
-```
+```js
 import BrowserImageManipulation from 'browser-image-manipulation'
 
 new BrowserImageManipulation()
@@ -46,7 +47,7 @@ new BrowserImageManipulation()
    .catch(e => alert(e.toString()))
 ```
 Multi format:
-```
+```js
 import BrowserImageManipulation from 'browser-image-manipulation'
 
 let picaOptions = {} // optional, see pica options
@@ -66,6 +67,19 @@ iM.saveAsBlob().then(blob => {
 }).catch(e => alert(e.toString()))
 ```
 
+Fluent interface:
+```js
+new BrowserImageManipulation()
+    .loadBlob(e.target.files[0])
+    .toCircle(400)
+    .toGrayscale()
+    .pixelize()
+    .rotate(90)
+    .saveAsImage()
+    .then(base64 => {
+        document.getElementById('exampleFluentImg').src = base64
+    }).catch(e => alert(e.toString()))
+```
 
 If use UglifyJs set in comperss evaluate to false
 ```
