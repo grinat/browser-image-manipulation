@@ -68,10 +68,14 @@ export class ImageManipulation {
     /**
      * @param width {number} - width to crop to.
      * @param height {number} - height to crop to.
+     * @param offsetX{number} - If specified, cropping will start from that offset on X axis,
+     * otherwise it will crop so result is centered in the source
+     * @param offsetY{number} - If specified, cropping will start from that offset on Y axis,
+     * otherwise it will crop so result is centered in the source
      * @returns {ImageManipulation}
      */
-    crop (maxWidth, maxHeight) {
-        this._addToTask(MANIPULATION, imageCrop(maxWidth, maxHeight))
+    crop (maxWidth, maxHeight, offsetX, offsetY) {
+        this._addToTask(MANIPULATION, imageCrop(maxWidth, maxHeight, offsetX, offsetY))
         return this
     }
 
