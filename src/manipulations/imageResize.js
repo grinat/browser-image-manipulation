@@ -5,9 +5,13 @@ import {RESIZE_TYPE_SQUARE, RESIZE_TYPE_TO} from '../constants'
 /**
  * @param newWidth{number} - new width after crop.
  * @param newHeight{number} - new height after crop.
+ * @param offsetX{number} - If specified, cropping will start from that offset on X axis,
+ * otherwise it will crop so result is centered in the source
+ * @param offsetY{number} - If specified, cropping will start from that offset on Y axis,
+ * otherwise it will crop so result is centered in the source
  * @returns {function(*=): Promise<HTMLCanvasElement>}
  */
- export function imageCrop(newWidth, newHeight) {
+ export function imageCrop(newWidth, newHeight, offsetX = 0, offsetY = 0) {
     return (canvasImage) => new Promise((resolve, reject) => {
         let dx = 0
         let dy = 0
@@ -16,8 +20,8 @@ import {RESIZE_TYPE_SQUARE, RESIZE_TYPE_TO} from '../constants'
         let width = canvasImage.width
         let height = canvasImage.height
 
-        sy = (height - newHeight) / 2
-        sx = (width - newWidth) / 2
+        sy = offsetY || (height - newHeight) / 2
+        sx = offsetX || (width - newWidth) / 2
 
         let cropedCanvas = document.createElement('canvas')
         let cropedCanvasCtx = cropedCanvas.getContext('2d')
