@@ -1,6 +1,9 @@
 workflow "Test, build, publish" {
+  resolves = [
+    "Publish",
+    "Has tag",
+  ]
   on = "push"
-  resolves = ["Publish"]
 }
 
 action "Install" {
@@ -26,9 +29,15 @@ action "Build" {
   args = "build"
 }
 
+action "Has tag" {
+  uses = "actions/bin/filter@8075e145e58d8ad0392cb3ff6c30a00fa07dcf8d"
+  needs = ["Build"]
+  args = "tag v*"
+}
+
 action "Publish" {
   uses = "actions/npm@e7aaefed7c9f2e83d493ff810f17fa5ccd7ed437"
-  needs = ["Build"]
+  needs = ["Has tag"]
   secrets = ["NPM_AUTH_TOKEN"]
   args = "publish --access public"
 }

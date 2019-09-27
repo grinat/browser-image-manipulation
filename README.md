@@ -26,6 +26,8 @@ Manipulations:
 - crop to square with resize
 - resize by max height/max width (used [pica](https://github.com/nodeca/pica) for correct resize image)
 - resize to fit in rectangle (proportion saved, empty space filled by color)
+- draw line
+- draw polygon
 
 Output formats:
 - blob

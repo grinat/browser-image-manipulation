@@ -10,6 +10,7 @@ import {gaussianBlur} from './filters/gaussianBlur.js'
 import {asBlob} from './savers/asBlob'
 import {asCanvas} from './savers/asCanvas'
 import {asImage} from './savers/asImage'
+import {drawLine, drawPolygon} from './manipulations/draw'
 
 import {RESIZE_TYPE_SQUARE, RESIZE_TYPE_TO, MANIPULATION, LOADER, FILTER} from './constants'
 
@@ -66,8 +67,8 @@ export class ImageManipulation {
     }
 
     /**
-     * @param width {number} - width to crop to.
-     * @param height {number} - height to crop to.
+     * @param maxWidth {number} - width to crop to.
+     * @param maxHeight {number} - height to crop to.
      * @param offsetX{number} - If specified, cropping will start from that offset on X axis,
      * otherwise it will crop so result is centered in the source
      * @param offsetY{number} - If specified, cropping will start from that offset on Y axis,
@@ -245,5 +246,28 @@ export class ImageManipulation {
      */
     saveAsImage (mimeType = 'image/jpeg', q = '1.0') {
         return this._runTasks().then(() => asImage(this.getCanvas(), mimeType, q))
+    }
+
+    /**
+     * @param points Sequence of [[x0, y0], [x1, y1] ...] or [x0, y0, x1, y1 ...]
+     * @param fill Color to use for the line
+     * @param width The line width, in pixels
+     * @returns {ImageManipulation}
+     */
+    drawLine (points = [], fill = 'green', width = 6) {
+        this._addToTask(MANIPULATION, drawLine(points, fill, width))
+        return this
+    }
+
+    /**
+     * @param points Sequence of [[x0, y0], [x1, y1] ...] or [x0, y0, x1, y1 ...]
+     * @param fill Color to use for the line
+     * @param outline Color to use for the outline
+     * @param outlineWidth The outline width, in pixels
+     * @returns {ImageManipulation}
+     */
+    drawPolygon (points = [], fill = 'green', outline = 'red', outlineWidth = 6) {
+        this._addToTask(MANIPULATION, drawPolygon(points, fill, outline, outlineWidth))
+        return this
     }
 }

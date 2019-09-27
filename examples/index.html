@@ -125,10 +125,30 @@
             <img src="" id="exampleCropImg">
         </div>
         <div class="box"></div>
+
+        <div class="box">
+            <p>Choose image for drawLine</p>
+            <input type="file" id="exampleDrawLine">
+        </div>
+        <div class="box">
+            <img src="" id="exampleDrawLineImg">
+        </div>
+        <div class="box"></div>
+
+
+        <div class="box">
+            <p>Choose image for drawPolygon</p>
+            <input type="file" id="exampleDrawPolygon">
+        </div>
+        <div class="box">
+            <img src="" id="exampleDrawPolygonImg">
+        </div>
+        <div class="box"></div>
     </div>
 </div>
 
 <script>
+    /* global BrowserImageManipulation */
     document.getElementById('exampleResize').addEventListener('change', function (e) {
         let file = e.target.files[0]
         let iM = new BrowserImageManipulation()
@@ -258,7 +278,49 @@
             }).catch(e => alert(e.toString()))
     })
 
-    function uploadToServer(blob, insertToId) {
+    // sample of answer from https://github.com/grinat/image_face_detector
+    const face = {
+        'face_landmarks_list': [{
+            'chin': [[142, 152], [148, 168], [155, 184], [163, 198], [173, 210], [187, 220], [204, 226], [221, 231], [237, 228], [249, 222], [258, 210], [264, 196], [268, 180], [268, 164], [268, 148], [266, 132], [263, 117]],
+            'left_eyebrow': [[152, 138], [161, 131], [172, 128], [184, 129], [196, 132]],
+            'right_eyebrow': [[218, 125], [225, 118], [234, 111], [245, 107], [255, 109]],
+            'nose_bridge': [[211, 141], [215, 151], [218, 162], [222, 173]],
+            'nose_tip': [[212, 182], [218, 182], [225, 182], [229, 178], [233, 175]],
+            'left_eye': [[169, 153], [176, 148], [185, 146], [193, 149], [186, 153], [177, 155]],
+            'right_eye': [[227, 139], [233, 132], [241, 129], [248, 129], [244, 136], [236, 139]],
+            'top_lip': [[203, 204], [211, 197], [220, 191], [228, 191], [233, 187], [242, 188], [250, 190], [246, 192], [235, 196], [229, 198], [222, 199], [208, 204]],
+            'bottom_lip': [[250, 190], [245, 201], [239, 207], [233, 210], [225, 211], [215, 210], [203, 204], [208, 204], [223, 200], [230, 199], [236, 196], [246, 192]]
+        }]
+    }
+
+    document.getElementById('exampleDrawLine').addEventListener('change', function (e) {
+        new BrowserImageManipulation()
+            .loadBlob(e.target.files[0])
+            .drawLine([[0, 0], [400, 400]]) // simple line
+            .drawLine(face['face_landmarks_list'][0]['top_lip'])
+            .drawLine(face['face_landmarks_list'][0]['bottom_lip'])
+            .drawLine(face['face_landmarks_list'][0]['nose_bridge'])
+            .drawLine(face['face_landmarks_list'][0]['chin'])
+            .saveAsImage()
+            .then(base64 => {
+                document.getElementById('exampleDrawLineImg').src = base64
+            }).catch(e => alert(e.toString()))
+    })
+
+    document.getElementById('exampleDrawPolygon').addEventListener('change', function (e) {
+        new BrowserImageManipulation()
+            .loadBlob(e.target.files[0])
+            .drawPolygon([[0, 0], [0, 400], [200, 400], [200, 0], [0, 0]]) // simple poly
+            .drawPolygon(face['face_landmarks_list'][0]['chin'])
+            .drawPolygon(face['face_landmarks_list'][0]['right_eye'])
+            .drawPolygon(face['face_landmarks_list'][0]['left_eye'])
+            .saveAsImage()
+            .then(base64 => {
+                document.getElementById('exampleDrawPolygonImg').src = base64
+            }).catch(e => alert(e.toString()))
+    })
+
+    function uploadToServer (blob, insertToId) {
         let img = document.getElementById(insertToId)
 
         let canvas = document.createElement('canvas')
