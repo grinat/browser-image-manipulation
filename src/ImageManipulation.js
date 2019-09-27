@@ -10,9 +10,9 @@ import {gaussianBlur} from './filters/gaussianBlur.js'
 import {asBlob} from './savers/asBlob'
 import {asCanvas} from './savers/asCanvas'
 import {asImage} from './savers/asImage'
-import {drawLine, drawPolygon} from './manipulations/draw'
+import {drawLine, drawPolygon} from './draw/draw'
 
-import {RESIZE_TYPE_SQUARE, RESIZE_TYPE_TO, MANIPULATION, LOADER, FILTER} from './constants'
+import {RESIZE_TYPE_SQUARE, RESIZE_TYPE_TO, MANIPULATION, LOADER, FILTER, DRAW} from './constants'
 
 export class ImageManipulation {
     constructor () {
@@ -255,7 +255,7 @@ export class ImageManipulation {
      * @returns {ImageManipulation}
      */
     drawLine (points = [], fill = 'green', width = 6) {
-        this._addToTask(MANIPULATION, drawLine(points, fill, width))
+        this._addToTask(DRAW, drawLine(points, fill, width))
         return this
     }
 
@@ -267,7 +267,7 @@ export class ImageManipulation {
      * @returns {ImageManipulation}
      */
     drawPolygon (points = [], fill = 'green', outline = 'red', outlineWidth = 6) {
-        this._addToTask(MANIPULATION, drawPolygon(points, fill, outline, outlineWidth))
+        this._addToTask(DRAW, drawPolygon(points, fill, outline, outlineWidth))
         return this
     }
 }
