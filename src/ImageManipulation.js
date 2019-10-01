@@ -10,7 +10,7 @@ import {gaussianBlur} from './filters/gaussianBlur.js'
 import {asBlob} from './savers/asBlob'
 import {asCanvas} from './savers/asCanvas'
 import {asImage} from './savers/asImage'
-import {drawLine, drawPolygon} from './draw/draw'
+import {drawLine, drawPolygon, drawRectangle} from './draw/draw'
 
 import {RESIZE_TYPE_SQUARE, RESIZE_TYPE_TO, MANIPULATION, LOADER, FILTER, DRAW} from './constants'
 
@@ -261,13 +261,25 @@ export class ImageManipulation {
 
     /**
      * @param points Sequence of [[x0, y0], [x1, y1] ...] or [x0, y0, x1, y1 ...]
-     * @param fill Color to use for the line
+     * @param fill Color to use for fill poly
      * @param outline Color to use for the outline
      * @param outlineWidth The outline width, in pixels
      * @returns {ImageManipulation}
      */
     drawPolygon (points = [], fill = 'green', outline = 'red', outlineWidth = 6) {
         this._addToTask(DRAW, drawPolygon(points, fill, outline, outlineWidth))
+        return this
+    }
+
+    /**
+     * @param points Sequence of [[left, bottom], [right, top]] or [left, bottom, right, top]
+     * @param fill null or color use for fill poly
+     * @param outline Color to use for the outline
+     * @param outlineWidth The outline width, in pixels
+     * @returns {ImageManipulation}
+     */
+    drawRectangle (points = [], fill = null, outline = 'red', outlineWidth = 6) {
+        this._addToTask(DRAW, drawRectangle(points, fill, outline, outlineWidth))
         return this
     }
 }

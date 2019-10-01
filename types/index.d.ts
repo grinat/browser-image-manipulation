@@ -18,6 +18,7 @@ declare module "browser-image-manipulation"{
         crop(maxWidth: number, maxHeight: number, offsetX?: number, offsetY?: number);
         drawLine(points: Array<any>, fill?: string, width?: string);
         drawPolygon(points: Array<any>, fill?: string, outline?: string, outlineWidth?: string);
+        drawRectangle(points: Array<any>, fill?: string, outline?: string, outlineWidth?: string);
     }
 
     global {

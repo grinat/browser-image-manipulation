@@ -63,3 +63,40 @@ export function drawPolygon (points, fill, outline, outlineWidth) {
         resolve(canvasImage)
     })
 }
+
+export function drawRectangle (points, fill, outline, outlineWidth) {
+    return (canvasImage) => new Promise((resolve, reject) => {
+        const points2d = pointsTo2DArray(points)
+
+        if (points2d.length < 2) {
+            throw new Error('Need points sequence of [[left, bottom], [right, top]] or [left, bottom, right, top]')
+        }
+
+        const [left, bottom] = points2d[0]
+        const [right, top] = points2d[1]
+
+        const ctx = canvasImage.getContext('2d')
+
+        if (fill) {
+            ctx.beginPath()
+        }
+
+        ctx.moveTo(left, bottom)
+        ctx.lineTo(left, top)
+        ctx.lineTo(right, top)
+        ctx.lineTo(right, bottom)
+        ctx.lineTo(left, bottom)
+
+        if (fill) {
+            ctx.closePath()
+            ctx.fillStyle = fill
+            ctx.fill()
+        }
+
+        ctx.strokeStyle = outline
+        ctx.lineWidth = outlineWidth
+        ctx.stroke()
+
+        resolve(canvasImage)
+    })
+}

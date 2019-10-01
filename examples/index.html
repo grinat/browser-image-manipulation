@@ -144,6 +144,15 @@
             <img src="" id="exampleDrawPolygonImg">
         </div>
         <div class="box"></div>
+
+        <div class="box">
+            <p>Choose image for drawRectangle</p>
+            <input type="file" id="exampleDrawRectangle">
+        </div>
+        <div class="box">
+            <img src="" id="exampleDrawRectangleImg">
+        </div>
+        <div class="box"></div>
     </div>
 </div>
 
@@ -317,6 +326,17 @@
             .saveAsImage()
             .then(base64 => {
                 document.getElementById('exampleDrawPolygonImg').src = base64
+            }).catch(e => alert(e.toString()))
+    })
+
+    document.getElementById('exampleDrawRectangle').addEventListener('change', function (e) {
+        new BrowserImageManipulation()
+            .loadBlob(e.target.files[0])
+            .drawRectangle([20, 200, 150, 60]) // [left, bottom, right, top]
+            .drawRectangle([40, 400, 300, 220], 'green')
+            .saveAsImage()
+            .then(base64 => {
+                document.getElementById('exampleDrawRectangleImg').src = base64
             }).catch(e => alert(e.toString()))
     })
 

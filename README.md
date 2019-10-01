@@ -30,6 +30,7 @@ Manipulations:
 Draw:
 - draw line
 - draw polygon
+- draw rectangle
 
 Output formats:
 - blob
