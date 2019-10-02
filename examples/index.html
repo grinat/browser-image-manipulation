@@ -162,6 +162,15 @@
             <img src="" id="exampleDrawTextImg">
         </div>
         <div class="box"></div>
+
+        <div class="box">
+            <p>Choose image for perspective</p>
+            <input type="file" id="examplePerspective">
+        </div>
+        <div class="box">
+            <img src="" id="examplePerspectiveImg">
+        </div>
+        <div class="box"></div>
     </div>
 </div>
 
@@ -362,6 +371,21 @@
             .saveAsImage()
             .then(base64 => {
                 document.getElementById('exampleDrawTextImg').src = base64
+            }).catch(e => alert(e.toString()))
+    })
+
+    document.getElementById('examplePerspective').addEventListener('change', function (e) {
+        new BrowserImageManipulation()
+            .loadBlob(e.target.files[0])
+            .perspective({
+                xy0: ['0%', '8%'],
+                xy1: ['100%', '20%'],
+                xy2: ['100%', '92%'],
+                xy3: ['0%', '100%']
+            })
+            .saveAsImage('image/png')
+            .then(base64 => {
+                document.getElementById('examplePerspectiveImg').src = base64
             }).catch(e => alert(e.toString()))
     })
 

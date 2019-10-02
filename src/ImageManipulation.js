@@ -11,6 +11,7 @@ import {asBlob} from './savers/asBlob'
 import {asCanvas} from './savers/asCanvas'
 import {asImage} from './savers/asImage'
 import {drawLine, drawPolygon, drawRectangle, drawText} from './draw/draw'
+import {perspective} from './manipulations/perspective'
 
 import {RESIZE_TYPE_SQUARE, RESIZE_TYPE_TO, MANIPULATION, LOADER, FILTER, DRAW} from './constants'
 
@@ -284,9 +285,6 @@ export class ImageManipulation {
     }
 
     /**
-     * @returns {ImageManipulation}
-     */
-    /**
      * @param xy{Array}
      * @param text{String}
      * @param style{Object}
@@ -299,6 +297,15 @@ export class ImageManipulation {
      */
     drawText (xy = [], text = '', style = {}) {
         this._addToTask(DRAW, drawText(xy, text, style))
+        return this
+    }
+
+    /**
+     * @param points - {xy0: [], xy1: [], xy2: [], xy3: []}
+     * @returns {ImageManipulation}
+     */
+    perspective (points) {
+        this._addToTask(MANIPULATION, perspective(points))
         return this
     }
 }

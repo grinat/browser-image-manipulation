@@ -20,6 +20,7 @@ declare module "browser-image-manipulation"{
         drawPolygon(points: Array<any>, fill?: string, outline?: string, outlineWidth?: string);
         drawRectangle(points: Array<any>, fill?: string, outline?: string, outlineWidth?: string);
         drawText(xy: Array<any>, text: string, style?: DrawTextStyle);
+        perspective(points: PerspectivePoints)
     }
 
     global {
@@ -35,4 +36,11 @@ interface DrawTextStyle {
     fill?: string; // null or color use for fill
     fillPadding?: string | number; // null or color use for fill
     rotateAngle?: number; // null or degrees for rotate text
+}
+
+interface PerspectivePoints {
+    xy0?: Array<string | number>;
+    xy1?: Array<string | number>;
+    xy2?: Array<string | number>;
+    xy3?: Array<string | number>;
 }
