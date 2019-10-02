@@ -19,6 +19,7 @@ declare module "browser-image-manipulation"{
         drawLine(points: Array<any>, fill?: string, width?: string);
         drawPolygon(points: Array<any>, fill?: string, outline?: string, outlineWidth?: string);
         drawRectangle(points: Array<any>, fill?: string, outline?: string, outlineWidth?: string);
+        drawText(xy: Array<any>, text: string, style?: DrawTextStyle);
     }
 
     global {
@@ -26,4 +27,12 @@ declare module "browser-image-manipulation"{
             BrowserImageManipulation: BrowserImageManipulation;
         }
     }
+}
+
+interface DrawTextStyle {
+    font?: string; // for example 'serif bold'
+    fontSize?: string | number; // null or size in % or px
+    fill?: string; // null or color use for fill
+    fillPadding?: string | number; // null or color use for fill
+    rotateAngle?: number; // null or degrees for rotate text
 }

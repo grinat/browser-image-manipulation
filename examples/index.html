@@ -153,6 +153,15 @@
             <img src="" id="exampleDrawRectangleImg">
         </div>
         <div class="box"></div>
+
+        <div class="box">
+            <p>Choose image for drawText</p>
+            <input type="file" id="exampleDrawText">
+        </div>
+        <div class="box">
+            <img src="" id="exampleDrawTextImg">
+        </div>
+        <div class="box"></div>
     </div>
 </div>
 
@@ -337,6 +346,22 @@
             .saveAsImage()
             .then(base64 => {
                 document.getElementById('exampleDrawRectangleImg').src = base64
+            }).catch(e => alert(e.toString()))
+    })
+
+    document.getElementById('exampleDrawText').addEventListener('change', function (e) {
+        new BrowserImageManipulation()
+            .loadBlob(e.target.files[0])
+            .drawText([60, 170], 'Hello world!', {
+                fontSize: '10%',
+                fill: 'red',
+                rotateAngle: 10,
+                fillPadding: '20px'
+            })
+            .drawText([10, 20], 'Hello world!')
+            .saveAsImage()
+            .then(base64 => {
+                document.getElementById('exampleDrawTextImg').src = base64
             }).catch(e => alert(e.toString()))
     })
 

@@ -31,6 +31,7 @@ Draw:
 - draw line
 - draw polygon
 - draw rectangle
+- draw text
 
 Output formats:
 - blob

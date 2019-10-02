@@ -10,7 +10,7 @@ import {gaussianBlur} from './filters/gaussianBlur.js'
 import {asBlob} from './savers/asBlob'
 import {asCanvas} from './savers/asCanvas'
 import {asImage} from './savers/asImage'
-import {drawLine, drawPolygon, drawRectangle} from './draw/draw'
+import {drawLine, drawPolygon, drawRectangle, drawText} from './draw/draw'
 
 import {RESIZE_TYPE_SQUARE, RESIZE_TYPE_TO, MANIPULATION, LOADER, FILTER, DRAW} from './constants'
 
@@ -274,12 +274,31 @@ export class ImageManipulation {
     /**
      * @param points Sequence of [[left, bottom], [right, top]] or [left, bottom, right, top]
      * @param fill null or color use for fill poly
-     * @param outline Color to use for the outline
+     * @param outline null or color to use for the outline
      * @param outlineWidth The outline width, in pixels
      * @returns {ImageManipulation}
      */
     drawRectangle (points = [], fill = null, outline = 'red', outlineWidth = 6) {
         this._addToTask(DRAW, drawRectangle(points, fill, outline, outlineWidth))
+        return this
+    }
+
+    /**
+     * @returns {ImageManipulation}
+     */
+    /**
+     * @param xy{Array}
+     * @param text{String}
+     * @param style{Object}
+     * @param style.font for example 'serif bold 16px'
+     * @param style.fontSize null or size in % or px
+     * @param style.fill null or color use for fill
+     * @param style.fillPadding null or color use for fill
+     * @param style.angle null or degrees for rotate text
+     * @returns {ImageManipulation}
+     */
+    drawText (xy = [], text = '', style = {}) {
+        this._addToTask(DRAW, drawText(xy, text, style))
         return this
     }
 }
