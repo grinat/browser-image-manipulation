@@ -20,7 +20,7 @@ declare module "browser-image-manipulation"{
         drawPolygon(points: Array<any>, fill?: string, outline?: string, outlineWidth?: string);
         drawRectangle(points: Array<any>, fill?: string, outline?: string, outlineWidth?: string);
         drawText(xy: Array<any>, text: string, style?: DrawTextStyle);
-        perspective(points: PerspectivePoints)
+        perspective(points: PerspectivePoints);
     }
 
     global {
