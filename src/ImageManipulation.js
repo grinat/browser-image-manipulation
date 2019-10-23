@@ -24,14 +24,18 @@ export class ImageManipulation {
         this._lastCanvas = null
 
         this._fileName = null
+        this._exif = {}
     }
 
     /**
      * @param imageFile{File}
+     * @param options{Object}
+     * @param options.fixOrientation{Boolean}
+     * @param options.readExif{Boolean}
      * @returns {ImageManipulation}
      */
-    loadBlob (imageFile) {
-        this._addToTask(LOADER, loadBlob(imageFile))
+    loadBlob (imageFile, options) {
+        this._addToTask(LOADER, loadBlob(imageFile, options))
         return this
     }
 
@@ -173,6 +177,9 @@ export class ImageManipulation {
                 if (data.fileName) {
                     this._fileName = data.fileName;
                 }
+                if (data.exif) {
+                    this._exif = data.exif
+                }
             } else {
                 if (this._canvas === null && this._loadedCanvas === null) {
                     throw new Error('use loadBlob first')
@@ -214,6 +221,13 @@ export class ImageManipulation {
      */
     getFileName () {
         return this._fileName
+    }
+
+    /**
+     * @returns {Object}
+     */
+    getExif () {
+        return this._exif
     }
 
     /**

@@ -11,7 +11,7 @@ npm install browser-image-manipulation --save
 
 ### Features
 Load image in formats:
-- blob
+- blob (optional, with image orientation detect and correct rotate)
 - canvas
 
 Filters:
@@ -39,13 +39,18 @@ Output formats:
 - canvas
 - base64 image
 
+Info:
+- get exif (only for blob)
+
 ### Usage
 One format:
 ```js
 import BrowserImageManipulation from 'browser-image-manipulation'
 
 new BrowserImageManipulation()
-   .loadBlob(e.target.files[0])
+   .loadBlob(e.target.files[0], {
+       fixOrientation: true // about problem: https://www.howtogeek.com/254830/why-your-photos-dont-always-appear-correctly-rotated/
+   })
    .gaussianBlur()
    .saveAsImage()
    .then(base64 => {
