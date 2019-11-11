@@ -1,21 +1,14 @@
 {
-  "env": {
-    "test": {
-      "presets": ["es2015"]
-    },
-    "development": {
-      "presets": [
-        ["env", {
-          "modules": false,
-          "targets": {
-            "browsers": ["> 1%", "last 2 versions", "not ie <= 8"]
-          }
-        }],
-        "stage-2"
-      ],
-      "plugins": [
-        "external-helpers"
-      ]
-    }
-  }
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "useBuiltIns": "entry"
+      }
+    ]
+  ],
+  "plugins": [
+    "@babel/plugin-transform-async-to-generator",
+    "@babel/plugin-transform-runtime"
+  ]
 }

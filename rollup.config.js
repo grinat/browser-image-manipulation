@@ -1,20 +1,28 @@
 import resolve from 'rollup-plugin-node-resolve'
 import commonjs from 'rollup-plugin-commonjs'
 import babel from 'rollup-plugin-babel'
-import uglify from 'rollup-plugin-uglify'
+import { terser } from 'rollup-plugin-terser'
 
 export default {
-    entry: 'index.js',
-    format: 'umd',
-    moduleName: 'browser-image-manipulation',
+    input: 'index.js',
+    output: {
+        file: 'dist/browser-image-manipulation.js',
+        name: 'browser-image-manipulation',
+        sourceMap: true,
+        format: 'umd'
+    },
     plugins: [
         resolve(),
+        commonjs(),
         babel({
-            exclude: 'node_modules/**'
+            exclude: 'node_modules/**',
+            runtimeHelpers: true
         }),
-        uglify(),
-        commonjs()
-    ],
-    sourceMap: true,
-    dest: 'dist/browser-image-manipulation.js'
+        terser({
+            compress: {
+                evaluate: false,
+                drop_console: true
+            }
+        })
+    ]
 }
