@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>browser-image-manipulation</title>
+    <script src="https://polyfill.io/v3/polyfill.js"></script>
     <script src="../dist/browser-image-manipulation.js"></script>
     <style>
         .wrapper-grid {
@@ -184,21 +185,21 @@
 <script>
     /* global BrowserImageManipulation */
     document.getElementById('exampleResize').addEventListener('change', function (e) {
-        let file = e.target.files[0]
-        let iM = new BrowserImageManipulation()
+        var file = e.target.files[0]
+        var iM = new BrowserImageManipulation()
             .loadBlob(file, {fixOrientation: true})
             .resize(800, 400)
 
-        iM.saveAsBlob().then(blob => {
-            const exifTags = iM.getExif()
-            document.getElementById('exampleResizeExif').innerHTML = JSON.stringify(exifTags, null, " ")
+        iM.saveAsBlob().then(function (blob) {
+            var exifTags = iM.getExif()
+            document.getElementById('exampleResizeExif').innerHTML = JSON.stringify(exifTags, null, ' ')
             if (blob.size > 3000000) {
                 return new Error('Max size 3 mb')
             }
             return iM.saveAsImage()
-        }).then(base64 => {
+        }).then(function (base64) {
             document.getElementById('exampleResizeImg').src = base64
-        }).catch(e => alert(e.toString()))
+        }).catch(function (e) { alert(e.toString()) })
     })
 
     document.getElementById('exampleFluent').addEventListener('change', function (e) {
@@ -209,49 +210,49 @@
             .pixelize()
             .rotate(90)
             .saveAsImage()
-            .then(base64 => {
+            .then(function (base64) {
                 document.getElementById('exampleFluentImg').src = base64
-            }).catch(e => alert(e.toString()))
+            }).catch(function (e) { alert(e.toString()) })
     })
 
     document.getElementById('centerInRectangle').addEventListener('change', function (e) {
-        let file = e.target.files[0]
-        let iM = new BrowserImageManipulation()
+        var file = e.target.files[0]
+        var iM = new BrowserImageManipulation()
             .loadBlob(file)
             .centerInRectangle(800, 400, {bgColor: 'red'})
 
-        iM.saveAsBlob().then(blob => {
+        iM.saveAsBlob().then(function (blob) {
             if (blob.size > 3000000) {
                 return new Error('Max size 3 mb')
             }
             uploadToServer(blob, 'centerInRectangleServer')
             return iM.saveAsImage()
-        }).then(base64 => {
+        }).then(function (base64) {
             document.getElementById('centerInRectangleImg').src = base64
-        }).catch(e => alert(e.toString()))
+        }).catch(function (e) { alert(e.toString()) })
     })
 
     document.getElementById('exampleToCircle').addEventListener('change', function (e) {
-        let file = e.target.files[0]
-        let iM = new BrowserImageManipulation()
+        var file = e.target.files[0]
+        var iM = new BrowserImageManipulation()
             .loadBlob(file)
             .toCircle(400)
 
-        iM.saveAsBlob().then(blob => {
+        iM.saveAsBlob().then(function (blob) {
             if (blob.size > 3000000) {
                 return new Error('Max size 3 mb')
             }
             uploadToServer(blob, 'exampleToCircleImgServer')
             return iM.saveAsImage()
-        }).then(base64 => {
+        }).then(function (base64) {
             document.getElementById('exampleToCircleImg').src = base64
-        }).catch(e => alert(e.toString()))
+        }).catch(function (e) { alert(e.toString()) })
     })
 
-    let iMRotate = new BrowserImageManipulation()
-    let angle = 10
+    var iMRotate = new BrowserImageManipulation()
+    var angle = 10
     document.getElementById('exampleRotate').addEventListener('change', function (e) {
-        let file = e.target.files[0]
+        var file = e.target.files[0]
         iMRotate.loadBlob(file)
         rotate()
     })
@@ -260,27 +261,27 @@
         angle = angle + 10
         rotate()
     })
-    function rotate() {
-        iMRotate.rotate(angle).saveAsBlob().then(blob => {
+    function rotate () {
+        iMRotate.rotate(angle).saveAsBlob().then(function (blob) {
             uploadToServer(blob, 'exampleRotateImgServer')
             return iMRotate.saveAsImage()
-        }).then(base64 => {
+        }).then(function (base64) {
             document.getElementById('exampleRotateImg').src = base64
-        }).catch(e => alert(e.toString()))
+        }).catch(function (e) { alert(e.toString()) })
     }
 
     document.getElementById('exampleToGrayscale').addEventListener('change', function (e) {
-        let file = e.target.files[0]
-        let iM = new BrowserImageManipulation()
+        var file = e.target.files[0]
+        var iM = new BrowserImageManipulation()
             .loadBlob(file)
             .toGrayscale()
 
-        iM.saveAsBlob().then(blob => {
+        iM.saveAsBlob().then(function (blob) {
             uploadToServer(blob, 'exampleToGrayscaleImgServer')
             return iM.saveAsImage()
-        }).then(base64 => {
+        }).then(function (base64) {
             document.getElementById('exampleToGrayscaleImg').src = base64
-        }).catch(e => alert(e.toString()))
+        }).catch(function (e) { alert(e.toString()) })
     })
 
     document.getElementById('examplePixelize').addEventListener('change', function (e) {
@@ -288,9 +289,9 @@
             .loadBlob(e.target.files[0])
             .pixelize()
             .saveAsImage()
-            .then(base64 => {
+            .then(function (base64) {
                 document.getElementById('examplePixelizeImg').src = base64
-            }).catch(e => alert(e.toString()))
+            }).catch(function (e) { alert(e.toString()) })
     })
 
     document.getElementById('exampleBlur').addEventListener('change', function (e) {
@@ -298,9 +299,9 @@
             .loadBlob(e.target.files[0])
             .gaussianBlur()
             .saveAsImage()
-            .then(base64 => {
+            .then(function (base64) {
                 document.getElementById('exampleBlurImg').src = base64
-            }).catch(e => alert(e.toString()))
+            }).catch(function (e) { alert(e.toString()) })
     })
 
     document.getElementById('exampleCrop').addEventListener('change', function (e) {
@@ -308,13 +309,13 @@
             .loadBlob(e.target.files[0])
             .crop(200, 300)
             .saveAsImage()
-            .then(base64 => {
+            .then(function (base64) {
                 document.getElementById('exampleCropImg').src = base64
-            }).catch(e => alert(e.toString()))
+            }).catch(function (e) { alert(e.toString()) })
     })
 
     // sample of answer from https://github.com/grinat/image_face_detector
-    const face = {
+    var face = {
         'face_landmarks_list': [{
             'chin': [[142, 152], [148, 168], [155, 184], [163, 198], [173, 210], [187, 220], [204, 226], [221, 231], [237, 228], [249, 222], [258, 210], [264, 196], [268, 180], [268, 164], [268, 148], [266, 132], [263, 117]],
             'left_eyebrow': [[152, 138], [161, 131], [172, 128], [184, 129], [196, 132]],
@@ -337,9 +338,9 @@
             .drawLine(face['face_landmarks_list'][0]['nose_bridge'])
             .drawLine(face['face_landmarks_list'][0]['chin'])
             .saveAsImage()
-            .then(base64 => {
+            .then(function (base64) {
                 document.getElementById('exampleDrawLineImg').src = base64
-            }).catch(e => alert(e.toString()))
+            }).catch(function (e) { alert(e.toString()) })
     })
 
     document.getElementById('exampleDrawPolygon').addEventListener('change', function (e) {
@@ -350,9 +351,9 @@
             .drawPolygon(face['face_landmarks_list'][0]['right_eye'])
             .drawPolygon(face['face_landmarks_list'][0]['left_eye'])
             .saveAsImage()
-            .then(base64 => {
+            .then(function (base64) {
                 document.getElementById('exampleDrawPolygonImg').src = base64
-            }).catch(e => alert(e.toString()))
+            }).catch(function (e) { alert(e.toString()) })
     })
 
     document.getElementById('exampleDrawRectangle').addEventListener('change', function (e) {
@@ -361,9 +362,9 @@
             .drawRectangle([20, 200, 150, 60]) // [left, bottom, right, top]
             .drawRectangle([40, 400, 300, 220], 'green')
             .saveAsImage()
-            .then(base64 => {
+            .then(function (base64) {
                 document.getElementById('exampleDrawRectangleImg').src = base64
-            }).catch(e => alert(e.toString()))
+            }).catch(function (e) { alert(e.toString()) })
     })
 
     document.getElementById('exampleDrawText').addEventListener('change', function (e) {
@@ -377,9 +378,9 @@
             })
             .drawText([10, 20], 'Hello world!')
             .saveAsImage()
-            .then(base64 => {
+            .then(function (base64) {
                 document.getElementById('exampleDrawTextImg').src = base64
-            }).catch(e => alert(e.toString()))
+            }).catch(function (e) { alert(e.toString()) })
     })
 
     document.getElementById('examplePerspective').addEventListener('change', function (e) {
@@ -392,24 +393,24 @@
                 xy3: ['0%', '100%']
             })
             .saveAsImage('image/png')
-            .then(base64 => {
+            .then(function (base64) {
                 document.getElementById('examplePerspectiveImg').src = base64
-            }).catch(e => alert(e.toString()))
+            }).catch(function (e) { alert(e.toString()) })
     })
 
     function uploadToServer (blob, insertToId) {
-        let img = document.getElementById(insertToId)
+        var img = document.getElementById(insertToId)
 
-        let canvas = document.createElement('canvas')
+        var canvas = document.createElement('canvas')
         canvas.width = 100
         canvas.height = 50
-        let ctx = canvas.getContext('2d')
+        var ctx = canvas.getContext('2d')
         ctx.font = '40px'
         ctx.fillStyle = 'red'
         ctx.fillText('Emulate uploading to server...', 5, 10)
         img.src = canvas.toDataURL()
 
-        setTimeout(() => {
+        setTimeout(function () {
             img.src = URL.createObjectURL(blob)
         }, 3000)
     }

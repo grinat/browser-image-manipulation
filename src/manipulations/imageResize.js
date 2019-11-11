@@ -43,7 +43,8 @@ import {RESIZE_TYPE_SQUARE, RESIZE_TYPE_TO} from '../constants'
  */
 export function imageResize (maxWidth, maxHeight, type = null, options = {}) {
     let resizeOptions = Object.assign({
-        pica: {}
+        pica: {},
+        picaInit: {}
     }, options)
 
     return (canvasImage) => new Promise((resolve, reject) => {
@@ -80,7 +81,7 @@ export function imageResize (maxWidth, maxHeight, type = null, options = {}) {
         canvas.width = newWidth
         canvas.height = newHeight
 
-        let picaInstanse = new Pica()
+        let picaInstanse = new Pica(resizeOptions.picaInit)
         picaInstanse.resize(canvasImage, canvas, resizeOptions.pica).then(resizedCanvas => {
             if (type === RESIZE_TYPE_SQUARE) {
                 let dx = 0
