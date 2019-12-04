@@ -14,7 +14,7 @@ declare module "browser-image-manipulation"{
         saveAsBlob(mimeType?: string, q?: string): Promise<File>;
         saveAsCanvas(): Promise<HTMLCanvasElement>;
         saveAsImage(mimeType?: string, q?: string): Promise<HTMLImageElement>;
-        setFileName(newFileName: string);
+        setFileName(newFileName: string): void;
         crop(maxWidth: number, maxHeight: number, offsetX?: number, offsetY?: number): this;
         drawLine(points: Array<any>, fill?: string, width?: string): this;
         drawPolygon(points: Array<any>, fill?: string, outline?: string, outlineWidth?: string): this;

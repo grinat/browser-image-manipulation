@@ -5,26 +5,23 @@ on:
 
 name: Test, build, publish
 jobs:
-  install:
-    name: Install
+  master:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
-    - name: Install
-      uses: actions/npm@e7aaefed7c9f2e83d493ff810f17fa5ccd7ed437
-      with:
-        args: install
-    - name: Test
-      uses: actions/npm@e7aaefed7c9f2e83d493ff810f17fa5ccd7ed437
-      with:
-        args: test
-    - name: Build
-      uses: actions/npm@e7aaefed7c9f2e83d493ff810f17fa5ccd7ed437
-      with:
-        args: build
-    - name: Publish
-      uses: actions/npm@e7aaefed7c9f2e83d493ff810f17fa5ccd7ed437
-      env:
-        NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
-      with:
-        args: publish --access public
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+
+      - name: Build and test
+        run: |
+          npm install
+          npm run build
+          npm test
+
+      - name: Publish
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_AUTH_TOKEN }}" > ~/.npmrc
+          npm publish --access public
