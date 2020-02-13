@@ -93,17 +93,9 @@ new BrowserImageManipulation()
     }).catch(e => alert(e.toString()))
 ```
 
-### Caveats
+### Increase performance
 #### Minify
-If use UglifyJs/TerserJS set in compress evaluate to false
-```
-compress: {
-  ...
-  evaluate: false
-  ...
-}
-```
-Or use only js,wasm features in resize methods:
+Use wasm features in resize methods:
 ```js
 new BrowserImageManipulation()
     .loadBlob(e.target.files[0])
@@ -125,13 +117,22 @@ new BrowserImageManipulation()
 
 ```
 
+But if use UglifyJs/TerserJS set in compress evaluate to false
+```
+compress: {
+  ...
+  evaluate: false
+  ...
+}
+```
+
 Without that, you can see error like:
 ```
 Uncaught ReferenceError: e is not defined
     at t (217c2170-1eb8-41b8-b91c-c3d57f706ea9:1)
 ```
 
-#### Ie 11 support
+### Ie 11 support
 For work in ie 11 you need some polyfils from core-js
 ```
 import 'core-js/modules/es.object.assign'
@@ -144,7 +145,7 @@ Perhaps everything will work if you add polyfills and use only js features:
 ```
 .resize(400, 400, {
         picaInit: {
-            features: ['js'] // <--- set only js feature
+            features: ['js'] // <--- only js feature
         }
     }) 
 ``` 

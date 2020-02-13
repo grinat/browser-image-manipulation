@@ -47,6 +47,10 @@ export function imageResize (maxWidth, maxHeight, type = null, options = {}) {
         picaInit: {}
     }, options)
 
+    if (!resizeOptions.picaInit.features) {
+        resizeOptions.picaInit.features = ['js']
+    }
+
     return (canvasImage) => new Promise((resolve, reject) => {
         let outputCanvas = null
         let canvas = document.createElement('canvas')

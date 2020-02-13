@@ -21,7 +21,7 @@ export default {
         terser({
             compress: {
                 evaluate: false,
-                drop_console: true
+                //drop_console: true
             }
         })
     ]

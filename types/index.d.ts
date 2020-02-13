@@ -1,7 +1,7 @@
 declare module "browser-image-manipulation"{
     export default class BrowserImageManipulation {
         constructor();
-        loadBlob(imageFile: File, options?: LoadBlobOptions): this;
+        loadBlob(imageFile: File|Blob, options?: LoadBlobOptions): this;
         loadCanvas(canvas: HTMLCanvasElement, saveAsFileName?: string): this;
         toSquare(length: number, opts?: ResizeOptions): this;
         resize(maxWidth: number, maxHeight: number, opts?: ResizeOptions): this;
@@ -13,7 +13,7 @@ declare module "browser-image-manipulation"{
         toCircle(diametr: number, opts?: CircleOptions): this;
         saveAsBlob(mimeType?: string, q?: string): Promise<File>;
         saveAsCanvas(): Promise<HTMLCanvasElement>;
-        saveAsImage(mimeType?: string, q?: string): Promise<HTMLImageElement>;
+        saveAsImage(mimeType?: string, q?: string): Promise<string>;
         setFileName(newFileName: string): void;
         crop(maxWidth: number, maxHeight: number, offsetX?: number, offsetY?: number): this;
         drawLine(points: Array<any>, fill?: string, width?: string): this;
@@ -95,9 +95,9 @@ interface LoadBlobOptions {
 
 // list of tags https://github.com/hMatoba/piexifjs/blob/19d29763e9c3a293aa4bb8fcd373a0117e729a32/piexif.js#L2147
 interface Exif {
-    '0th'?: Object;
-    '1st'?: Object;
-    Exif?: Object;
-    GPS?: Object;
-    Interop?: Object;
+    '0th'?: any;
+    '1st'?: any;
+    Exif?: any;
+    GPS?: any;
+    Interop?: any;
 }
