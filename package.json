@@ -35,7 +35,7 @@
   "homepage": "https://github.com/grinat/browser-image-manipulation#readme",
   "dependencies": {
     "blueimp-canvas-to-blob": "^3.14.0",
-    "pica": "~5.1.0",
+    "pica": "^9.0.1",
     "piexifjs": "^1.0.6",
     "stackblur-canvas": "~2.2.0"
   },

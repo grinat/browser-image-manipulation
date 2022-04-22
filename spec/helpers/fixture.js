@@ -9,7 +9,10 @@ export function getFixture (name) {
     const img = new Canvas.Image()
     img.src = fs.readFileSync(path.join(__dirname, '..', 'fixtures', name))
 
-    const cnv = Canvas.createCanvas(img.width, img.height)
+    const cnv = document.createElement('canvas')
+    cnv.width = img.width
+    cnv.height = img.height
+
     const ctx = cnv.getContext('2d')
     ctx.drawImage(img, 0, 0, img.width, img.height)
     return cnv
