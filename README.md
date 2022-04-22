@@ -149,3 +149,14 @@ Perhaps everything will work if you add polyfills and use only js features:
         }
     }) 
 ``` 
+
+### Development
+```
+# install deps
+npm i
+
+# run in dev mode
+npm run dev
+```
+
+and go to /examples/index.html and open in web-browser
