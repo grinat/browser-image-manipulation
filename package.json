@@ -60,7 +60,7 @@
     "filereader": "^0.10.3",
     "jasmine": "^3.3.1",
     "jasmine-console-reporter": "^3.1.0",
-    "jsdom": "^13.1.0",
+    "jsdom": "^16.5.0",
     "mime": "~1.4.0",
     "pixelmatch": "^4.0.2",
     "rollup": "^1.26.3",
